@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Michael Guldberg – Tekst</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <h1 class="sidebar-logo"><a href="index.html">Michael Guldberg</a></h1>
+    <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+
+    <ul class="menu-nav">
+      <li class="has-dropdown">
+        <a href="index.html" class="category-name">fotografi</a>
+        <ul class="dropdown">
+          <li class="item"><a href="portraetter.html"><span class="before">—</span>portræt</a></li>
+          <li class="item"><a href="bryllup.html"><span class="before">—</span>bryllup</a></li>
+          <li class="item"><a href="folkeklubben.html"><span class="before">—</span>folkeklubben</a></li>
+        </ul>
+      </li>
+      <li class="top-level"><a href="video.html">video</a></li>
+      <li class="top-level"><a href="tekst.html" class="active">tekst</a></li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <a href="https://instagram.com/michaelguldbergfoto" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-70 -150 1000 1000" class="social-icon">
+          <path fill="currentColor" d="M571 500q0-59-41-101t-101-42-101 42-42 101 42 101 101 42 101-42 41-101zm77 0q0 91-64 156t-155 64-156-64-64-156 64-156 156-64 155 64 64 156zm61-229q0 21-15 36t-37 15-36-15-15-36 15-36 36-15 37 15 15 36zM429 148H327l-54 2-57 5-40 11q-28 11-49 32t-33 49q-6 16-10 40t-6 58-1 53 0 59 0 43 0 43 0 59 1 53 6 58l10 40q12 28 33 49t49 32q16 6 40 11t57 5 54 2 59 0 43 0 42 0 59 0 54-2 58-5 39-11q28-11 50-32t32-49q6-16 10-40t6-58 1-53 0-59 0-43 0-43 0-59-1-53-6-58l-10-40q-11-28-32-49t-50-32q-16-6-39-11t-58-5-54-2-59 0-42 0zm428 352q0 128-3 177-5 116-69 180t-179 69q-50 3-177 3t-177-3q-116-6-180-69T3 677q-3-49-3-177t3-177q5-116 69-180t180-69q49-3 177-3t177 3q116 6 179 69t69 180q3 49 3 177z"/>
+        </svg>
+      </a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="text-page">
+      <button class="gallery-arrow text-arrow" id="prev" aria-label="Forrige artikel">&#8592;</button>
+      <button class="gallery-arrow text-arrow" id="next" aria-label="Næste artikel">&#8594;</button>
+      <div class="text-stage" id="text-stage">
+        <article class="article">
+          <h2 class="article-title" id="article-title"></h2>
+          <p class="article-meta"  id="article-meta"></p>
+          <div class="article-body" id="article-body"></div>
+        </article>
+      </div>
+      <div class="text-footer">
+        <p class="text-counter" id="text-counter"></p>
+      </div>
+    </div>
+  </main>
+
+</div>
+
+<script>
+  // ── Artikler ────────────────────────────────────────────────────────────
+  // Hver artikel består af:
+  //   title : overskriften
+  //   meta  : valgfri linje under titlen (medie, dato osv.)
+  //   body  : selve teksten — pak hvert afsnit i <p>...</p>
+  //           Brug <em>...</em> for kursiv og <strong>...</strong> for fed.
+  window.articles = [
+    {
+      title: "Andreas døde i tragisk arbejdsulykke: Nåede aldrig at blive gammel på sin drømmeø",
+      meta:  "Fyns Amts Avis · 8. juni 2021",
+      body: `
+        <p class="lead">Han talte otte sprog, spiste middag med den ukrainske mafia og plantede solsikker på Ærø. Andreas levede et hektisk liv. Han kæmpede sin vej fra trange kår i Polen til en tilværelse i Danmark, som han håbede ville vare i mange år, men desværre blev afbrudt alt for tidligt i en tragisk arbejdsulykke.</p>
+
+        <!-- Læg dit foto i images/tekst/ og fjern kommentar-tegnene omkring linjerne nedenfor:
+        <p><img src="images/tekst/andreas-lade.jpg" alt="I denne lade døde Andreas på tragisk vis"></p>
+        <p class="photo-credit">I denne lade døde Andreas på tragisk vis. Foto: Michael Printzlau</p>
+        -->
+
+        <p><strong>Ærø:</strong> Jesper Helstrup og Andreas Michalikowski tog ofte turen til Østeuropa for at lave forretninger eller besøge Andreas' familie. Det var den slags arbejdsgiver-/arbejdstagerforhold, de havde. Hver gang de kørte den tur, sørgede de altid for at komme ind på de få gratis toiletter, der er tilbage langs motorvejene i Tyskland. Andreas var nærig på den måde, man kun kan grine lidt af. Og de skulle altid have en bockwurst på en bestemt rasteplads i Tyskland.</p>
+
+        <p>Da de tog den tur en eftermiddag i maj, skulle de besøge de samme toiletter, spise de samme pølser. Kort sagt tage akkurat den samme tur. Men noget var anderledes denne gang.</p>
+
+        <p>I stedet for at sidde på forsædet, som han plejede, lå Andreas' aske i en urne på bagsædet.</p>
+
+        <p>Jesper tog turen på de 770 kilometer fra Marstal på Ærø, hvor Andreas døde, til Luban i Polen, hvor Andreas voksede op, for at begrave sin ven.</p>
+
+        <p>Andreas selv havde taget turen mange gange i løbet af de 27 år, han har kendt og arbejdet med Jesper. Første gang, han tog turen til Danmark, var i start 80'erne. Andreas skulle gå på landbrugsskolen i Holstebro, og i løbet af den tid voksede hans interesse for landbrugsmaskiner.</p>
+
+        <p>Det var gennem landbrugsmaskinerne, Jesper først stiftede bekendtskab med Andreas.</p>
+
+        <h3>Ford Super Major</h3>
+
+        <p>Da Jesper boede i Bramming satte han en traktor til salg i Den Blå Avis, en ældre Ford Super Major. Der var ikke mange, der havde vist interesse for den gamle traktor, udover en enkelt polsk mand.</p>
+
+        <p>– Jah jah. Jeg komme forbi, havde manden sagt på gebrokkent dansk i telefonen.</p>
+
+        <p>Men manden kom aldrig.</p>
+
+        <p>Flere måneder senere havde Jesper næsten opgivet at få traktoren solgt. Men på en tur fra Bramming til Viborg stod han på en rasteplads syd for byen Thorning og kiggede på to lastbiler med polske nummerplader. Det var en varm dag, så dørene på lastbilerne stod åbne, og de var læsset med gamle traktorer. Og det fik Jesper til at tænke på den polske mand, der havde lovet at komme for at købe den gamle Ford Super Major, men aldrig dukkede op.</p>
+
+        <p>– Jeg prøver sgu at ringe til ham igen, tænkte Jesper.</p>
+
+        <p>Telefonen ringede, og pludselig kunne Jesper høre en ringetone fra et af førerhusene. Telefonen blev taget.</p>
+
+        <p>– Det er Andreas, lød det simultant fra både telefonen og ud af førerhuset på lastbilen.</p>
+
+        <p>Andreas endte med at købe den gamle traktor. Men udover dét var der ikke nogen kontakt mellem de to mænd i lang tid. Indtil en dag, omkring et halvt år senere, da Andreas pludselig stod på Jespers fars dørtrin. Han havde det ikke godt og var kommet i økonomiske problemer.</p>
+
+        <p>Af en eller anden grund havde der været en følelse i Andreas der sagde, at han kunne få hjælp hos Jesper.</p>
+
+        <p>Det kunne han. Han fik lov til at sætte en campingvogn op hos Jespers far, hvor han kunne bo, indtil han fandt sit fodfæste igen.</p>
+
+        <h3>Den Polske Ambassade</h3>
+
+        <p>Andreas skulle vise sig at være et bekendtskab, der var noget eksotisk for bramminggenserne. Campingvognen blev kaldt for "Den Polske Ambassade", fordi der kom et utal af mennesker med forskellig baggrund og nationaliteter forbi. Kasakhere, ukrainere og russere frekventerede campingvognen.</p>
+
+        <p>Det var der, Jesper opdagede, at Andreas kunne tale med dem alle. Faktisk talte han otte sprog. Måske ikke perfekt, men kan kunne begå sig.</p>
+
+        <p>Der gik det op for Jesper, at han kunne bruge Andreas som partner og tolk til at sælge landbrugsmaskiner fra Danmark til Østeuropa.</p>
+
+        <p>I de følgende år fandt Jesper ud af, at Andreas var noget særligt. Han kunne tale på flydende russisk om komplekse, tekniske specifikationer på de mange forskellige maskiner, de havde med at gøre. Han forstod sig på globalpolitiske problemstillinger. Og så var han en sælger af Guds nåde. Hvis den potentielle kunde ikke kunne se meningen med at købe en given maskine, så kunne Andreas skabe det behov. Dog kunne det ske, at Andreas' metoder skabte flere problemer, end de løste.</p>
+
+        <p>Når man laver den slags forretninger i Østeuropa, så kommer der nogle gange de forkerte mennesker frem fra skyggerne. Det mærkede Andreas og Jesper på egen krop, da de pludselig stod med en invitation til en audiens hos den ukrainske mafia. De skulle bruge nogle reservedele.</p>
+
+        <p>Andreas og Jesper blev enige om, at det var en dårlig idé at have fakturaer liggende hos den slags typer, men de ville heller ikke fornærme dem. Så de deltog i middagen hos mafiaen, men fabrikerede en historie om, at Andreas faktisk slet ikke lavede den slags forretning mere, og Jesper lige var blevet skadet og syg, så han kunne ikke leve op til den høje standard, som de forventede.</p>
+
+        <h3>Ærø</h3>
+
+        <p>Da faren døde, vendte Jesper bunden i vejret på sit liv. Landbruget blev solgt, og han ledte efter nye græsmarker, hvor han kunne leve sit liv i ro og mag. Måske opbygge et landbrug, som hans søn kunne overtage. Uden at se huset købte han en bolig på Ærø. Og Andreas fulgte med.</p>
+
+        <p>Andreas blev straks forelsket i øen. Han var glødende katolik, så han begyndte at frekventere de lokale kirker hver søndag. Det var ikke som at komme i den katolske kirke i Esbjerg, men det var godt nok.</p>
+
+        <p>– Her kunne jeg godt se mig selv blive gammel, sagde han.</p>
+
+        <p>Men det kunne ikke sådan lige lade sig gøre, fordi han ikke havde fast arbejde i Danmark, hvilket gjorde, at han heller ikke kunne købe et hus.</p>
+
+        <p>Men igen kom Andreas og Jespers kendskab de to venner til gode. Jesper ansatte Andreas på sin gård til en fast månedsløn, så han kunne købe et hus på Ærø, som han således kunne blive gammel i.</p>
+
+        <p>Andreas begyndte at dyrke haven, beskære træerne langs vejen og generelt nusse om det lille stykke natur, han havde rundt om det lille hus i Leby. Det blev hans lille oase.</p>
+
+        <p>Særligt var han stolt af sine solsikker. Han fik fragtet specielle solsikkefrø herop fra Polen, som han dyrkede i sin lille forhave. Solsikkerne var som ham selv. Fra simple kår i Polen, men trives så snart de kom i dansk jord.</p>
+
+        <h3>Herborg roeskærer</h3>
+
+        <p>Andreas arbejdede ikke sådan rigtigt på Jespers gård. Han passede lidt dyr, beskar nogle træer og passede haven. Men det strukturerede arbejde på gården kom først, da Jesper blev syg med en blodprop.</p>
+
+        <p>Så skulle Andreas tage over på mange flere fronter. Heldigvis havde han masser af erfaring som landmand fra sin tid på landbrugsskolen i Holstebro.</p>
+
+        <p>Jesper kom en dag i december ind til Andreas, der var igang med fjerne en sten fra en Herborg roeskærer. Den er sat op på den måde, at man putter roer ned i en to meter høj cylinder, hvori der roterer et spiralformet skær, der snitter roerne. Maskinen kørte stadig, idet Andreas kæmpede med at få stenen ud.</p>
+
+        <p>– Det må du fandme ikke gøre, Andreas, havde Jesper fortalt.</p>
+
+        <p>Maskinen skulle være slukket, når man prøver på den slags.</p>
+
+        <p>– Jeg har arbejdet med sådan en maskine, siden jeg var 25 år. Jeg har styr på det, sagde Andreas.</p>
+
+        <p>Men den indstilling til netop den maskine kom til at koste Andreas livet. En morgen i marts 2021 gik det galt.</p>
+
+        <h3>Ulykken</h3>
+
+        <p>Ingen ved præcist, hvad der skete, fordi Andreas var den eneste til stede den skæbnesvangre morgen.</p>
+
+        <p>Men noget tyder på, at præcist det samme var sket, som den dag i december. Der havde sat sig en sten fast i den gamle Herborg roeskærer. Og Andreas begik den hybris at ville fjerne stenen med et koben, mens maskinen stadig var sat til.</p>
+
+        <p>Da stenen var blevet løsrevet, gik maskinen igang igen. Og det store snekkegear i toppen af landbrugsmaskinen satte i rotationer. Enorme kræfter begyndte at rykke i maskinen, og med sig rev den Andreas' hættetrøje.</p>
+
+        <p>Andreas kunne ikke nå at reagere. Med voldsom kraft blev han trukket bagud ned mod maskinen. Hans hals blev presset ind mod det kolde metal, og på grund af den måde, hvorpå maskinen havde fået fat i hans hætte, blev hans hovedpulsåre klemt af. Det var ovre i løbet af få sekunder.</p>
+
+        <p>Selv hvis der havde været en person til at trække stikket ud, ville det ikke have gjort nogen forskel.</p>
+
+        <p>Under en time senere ankom Jesper til gården. Uanende gik han ind i laden, hvor roeskæreren stod. Det gav et sæt i ham, da han passerede en gravko, der stod i døråbningen, kiggede til venstre, og så sin ven gennem 27 år, helt blå i hovedet, hængende fra roeskærerens kant. Død.</p>
+
+        <h3>Polsk øl</h3>
+
+        <p>En måned efter ulykken sidder Jesper i sit køkken og fortæller om hele forløbet. Han er lige kommet hjem fra Polen, hvortil han har transporteret Andreas' urne for at blive begravet. Jævnfør en aktindsigt fra arbejdstilsynet som Fyns Amts Avis har fået, bliver Andreas' død kategoriseret som en arbejdsulykke, som Jesper ikke kunne have gjort noget ved. Roeskæreren blev af arbejdstilsynet godkendt til at arbejde videre, men Jesper har destrueret den. Han kan simpelthen ikke holde ud at have en maskine stående, der har slået hans ven ihjel.</p>
+
+        <p>Da journalisten fra Fyns Amts Avis ankommer til Jespers gård, bliver han ikke budt på kaffe, men en polsk øl af mærket Zubr. På logoet er der en stor bisonokse.</p>
+
+        <p>– Det føler jeg faktisk er mere passende end kaffe, siger Jesper i en lidt dyster tone.</p>
+
+        <p>Jesper er en stor mand. Både i højde og drøjde. Han taler i et dybt toneleje med tung jysk dialekt. Det er tydeligt, at han bliver meget berørt af at tale om Andreas. Når han taler om landbrugsmaskiner, eller nogle af de eventyr han var på med Andreas, taler han hurtigt, nærmest rytmeløst. Men når samtalen falder på ulykken, knækker hans stemme og bliver sagte.</p>
+
+        <p>– Andreas ville gerne være blevet gammel og dø på Ærø. Han fik kun lov til det ene, siger han.</p>
+
+        <p style="margin-top:40px;font-size:12px;color:#888;">
+          Oprindeligt bragt i Fyns Amts Avis, 8. juni 2021 ·
+          <a href="https://faa.dk/navne/andreas-doede-i-tragisk-arbejdsulykke-naaede-aldrig-at-blive-gammel-paa-sin-droemmeoe"
+             target="_blank" rel="noopener" style="color:#888;text-decoration:underline;">
+            læs originalen her ↗
+          </a>
+        </p>
+      `
+    },
+    {
+      title: "Sexkino i Odense: Kom med i de forbudte lysters klub",
+      meta:  "Fyens Stiftstidende",
+      body: `
+        <!-- Læg dit foto i images/tekst/ og fjern kommentar-tegnene omkring linjerne nedenfor:
+        <p><img src="images/tekst/sexkino.jpg" alt="Sexkinoen på Vesterbro"></p>
+        <p class="photo-credit">Foto: Michael Guldberg</p>
+        -->
+
+        <p>– Det er fandme et frækt skæg, du har, siger en høj, ranglet mand til mig, i det vi går forbi hinanden i en mørk gang, kun let oplyst af røde neonlys fra de nærtliggende korridorer.</p>
+
+        <p>Lyset fra den selvlysende penisring flimrer og flakker, når han med et fast tag om sit erigerede lem gnider hånden frem og tilbage.</p>
+
+        <p>I modsætning til den tunge lugt af gammel sved, der ellers huserer overalt her, dufter han nyvasket. Han har været i bad. Han har gjort sig klar til at komme herned.</p>
+
+        <p>Det eneste, man kan høre udover forsigtige klipklapper-skridt fra rundt omkring på gangene, er kvindestøn bag lukkede døre.</p>
+
+        <p>– Må jeg ikke godt røre lidt ved dig inde i mørkerummet, spørger han, mens hans blege, blottede bryst giver genskær fra lysstofrørene.</p>
+
+        <p>– Vi er et par stykker derinde, fortsætter han. Han har bukser på, men de står åbne på en måde, så han med små, korte skridt må vrælte sig fremad, mens han onanerer til synet af den nyankomne person. Det vil sige mig.</p>
+
+        <p>Som fotograf på Fyens Stiftstidende har jeg begivet mig ind i sexkinoen på Vesterbro med et professionelt anliggende og dermed ikke for at få tilbud fra stedets gæster. Men mandens toneleje afvæbner mig. Han taler til mig på en afslappet og næsten hyggelig måde. Det føles næsten ikke som en seksuel forespørgsel, han kommer med. Det føles som et hurtigt kompliment til en fremmed på gaden.</p>
+
+        <p>Eller som en flink håndsrækning til et nyt medlem i klubben, der ikke ved, hvad han skal gøre af sig selv andet end at takke "ja".</p>
+
+        <p>Og dog.</p>
+
+        <p>– Nej tak. Jeg er her faktisk bare for at kigge, siger jeg let stammende.</p>
+
+        <p>– Ej, hvor du driller, siger han og griner. Stadig med sit lem i hånden.</p>
+
+        <p>Biografen er ikke en biograf som vi kender det med en stor sal. Den består derimod af en række rum i forskellig størrelse, hvor man kan gå ind enten alene eller som en gruppe. Forskellige rum er udstyret med forskellige ting, man kan bruge som gloryholes eller kors, man kan hænges op på.</p>
+
+        <p>Ude i gangen, udenfor selve biografen, er der et rum. Et rum med ti hylder, hver med to DVD-afspillere på hver hylde. Det er derfra, alle filmene bliver afspillet, så man inde i biografen frit kan skifte mellem filmene med et simpelt tryk på en kontakt.</p>
+
+        <p>Filmene bliver valgt fra dag til dag, men langt fra tilfældigt. En film må ikke vises to gange indenfor en seks måneders periode. At udvælge dagens film er derfor lidt af et logistisk arbejde, som kræver sin mand. En mand ved navn Morten Monin.</p>
+
+        <p>– Vi viser ikke film med tis eller afføring. Det bliver simpelthen for meget derned i kinoen, siger Morten Monin, der er markedsføringschef for Sexkinoen.</p>
+
+        <p>Alle døre ind til de små private rum er åbne, så jeg kan se, hvilken kanal fjernsynene er slået over på. I næsten alle rummene står den på transkønnet eller homoseksuel porno. Kun et rum med to skærme har en heteroseksuel film kørende på den ene.</p>
+
+        <p>Det er ikke så underligt ifølge Morten Monin.</p>
+
+        <p>– Det er mellem 95-98 procent mænd, der kommer her. Det kan være, at de altid er kommet her, og at de derfor bliver ved med det. Der er også transpersoner. Det her er det eneste sted i byen, hvor de frit kan komme. Ellers kan det også være, at de er biseksuelle og har kone og børn derhjemme, siger han.</p>
+
+        <p>Tilbage i biografen sidder jeg i en sofa og betragter en mand sidde og kigge på sin telefon. Det her føles som en slags venteværelse. Der kører dog en film med transseksuelt gruppesex på en fladskærm. Men det virker, som om, man kan slappe af herude. Der er en automat med vand og øl.</p>
+
+        <p>Pludseligt udbryder manden over for mig:</p>
+
+        <p>– Ahh, for helvede!</p>
+
+        <p>Jeg kigger op på ham med et overrasket blik.</p>
+
+        <p>– Det er konen, du ved, siger han let.</p>
+
+        <p>Så tager han hurtigt sin taske i et aflåst skab og går.</p>
+
+        <div style="margin-top:36px;padding-top:18px;border-top:1px solid #eee;font-size:12px;color:#777;font-style:italic;line-height:1.65;">
+          <p style="margin-bottom:10px;font-size:12px;color:#777;">Da Michael Guldberg besøgte Sexkinoen for at fotografere, var det inden, biografen officielt åbnede. Han stoppede med at fotografere, da gæsterne kom.</p>
+          <p style="margin-bottom:10px;font-size:12px;color:#777;">Han har besøgt Sexkino flere gange for at tale med dem, der bruger stedet.</p>
+          <p style="margin-bottom:10px;font-size:12px;color:#777;">Alle er blevet lovet anonymitet, da flere af gæsterne er der, uden deres kone eller kærestes vidende.</p>
+          <p style="margin-bottom:0;font-size:12px;color:#777;">Andre kommer der helt åbent, men ønsker ikke at stå frem alligevel.</p>
+        </div>
+
+        <p style="margin-top:32px;font-size:12px;color:#888;font-style:normal;">
+          Oprindeligt bragt i Fyens Stiftstidende ·
+          <a href="https://fyens.dk/odense/sexkino-i-odense-kom-med-i-de-forbudte-lysters-klub"
+             target="_blank" rel="noopener" style="color:#888;text-decoration:underline;">
+            læs originalen her ↗
+          </a>
+        </p>
+      `
+    },
+    // Tilføj flere artikler ved at kopiere blokken ovenfor.
+  ];
+</script>
+<script src="text.js"></script>
+<script src="menu.js"></script>
+
+</body>
+</html>

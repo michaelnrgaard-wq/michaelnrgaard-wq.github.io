@@ -1,0 +1,532 @@
+/* ── Fonts ─────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@200;300&family=Inter:wght@700&display=swap');
+
+/* ── Reset ─────────────────────────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: 'IBM Plex Mono', 'Input Mono Narrow', 'Courier New', monospace;
+  font-weight: 200;
+  font-size: 13px;
+  line-height: 1.65;
+  color: #444;
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul { list-style: none; }
+
+/* ── Layout: sidebar + main ────────────────────────────── */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── Sidebar ───────────────────────────────────────────── */
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  padding: 72px 32px 32px 84px;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  background: #fff;
+}
+
+.sidebar-logo {
+  font-family: 'Inter', 'Benton Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  color: #222;
+  line-height: 1.2;
+  margin-bottom: 38px;
+}
+
+.sidebar-logo a {
+  color: inherit;
+}
+
+.menu-nav {
+  flex: 1;
+}
+
+.menu-nav .category-name {
+  font-family: 'IBM Plex Mono', 'Input Mono Narrow', monospace;
+  font-weight: 200;
+  font-size: 13px;
+  color: #444;
+  display: block;
+  padding: 5px 0;
+  margin-top: 6px;
+}
+
+.menu-nav .dropdown {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease, margin-bottom 0.3s ease;
+  margin-bottom: 0;
+}
+
+.menu-nav li.has-dropdown:hover .dropdown,
+.menu-nav li.has-dropdown.open .dropdown {
+  max-height: 160px;
+  margin-bottom: 18px;
+}
+
+/* Lille pil ved siden af "fotografi" — roterer 90° når menuen folder ud */
+.menu-nav .has-dropdown .category-name::after {
+  content: '›';
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 14px;
+  color: #888;
+  transform-origin: center;
+  transition: transform 0.25s ease;
+}
+
+.menu-nav li.has-dropdown:hover .category-name::after,
+.menu-nav li.has-dropdown.open .category-name::after {
+  transform: rotate(90deg);
+}
+
+.menu-nav .item a,
+.menu-nav .top-level > a {
+  display: block;
+  font-family: 'IBM Plex Mono', 'Input Mono Narrow', monospace;
+  font-weight: 200;
+  font-size: 13px;
+  color: #444;
+  padding: 5px 0;
+  transition: color 0.15s;
+}
+
+.menu-nav .item a:hover,
+.menu-nav .item a.active,
+.menu-nav .top-level > a:hover,
+.menu-nav .top-level > a.active {
+  color: #000;
+}
+
+.menu-nav .before {
+  display: inline-block;
+  margin-right: 6px;
+  color: #888;
+}
+
+.menu-nav .top-level {
+  margin-top: 12px;
+}
+
+/* ── Sidebar footer (Instagram) ────────────────────────── */
+.sidebar-footer {
+  margin-top: 22px;
+}
+
+.menu-nav {
+  flex: 0 0 auto;
+}
+
+.sidebar-footer .social-icon {
+  width: 18px;
+  height: 18px;
+  color: #444;
+  transition: color 0.15s;
+}
+
+.sidebar-footer a:hover .social-icon {
+  color: #000;
+}
+
+/* ── Main content ──────────────────────────────────────── */
+.main {
+  margin-left: 270px;
+  flex: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Gallery ───────────────────────────────────────────── */
+.gallery-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.gallery-stage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 36px 64px 16px;
+}
+
+/* Markøren bliver til en venstre- eller højre-pil afhængigt af hvor på billedet musen er */
+.gallery-stage.cursor-prev {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 32 32'><path d='M20 6L8 16L20 26' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/><path d='M20 6L8 16L20 26' fill='none' stroke='white' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/></svg>") 11 11, w-resize;
+}
+
+.gallery-stage.cursor-next {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 32 32'><path d='M12 6L24 16L12 26' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/><path d='M12 6L24 16L12 26' fill='none' stroke='white' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/></svg>") 11 11, e-resize;
+}
+
+#gallery-main {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: opacity 0.2s ease;
+}
+
+.gallery-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 12px;
+  font-size: 16px;
+  color: #444;
+  opacity: 0.3;
+  transition: opacity 0.15s;
+  line-height: 1;
+  user-select: none;
+  font-family: inherit;
+}
+
+.gallery-arrow:hover { opacity: 1; }
+
+#prev { left: 12px; }
+#next { right: 12px; }
+
+.gallery-footer {
+  flex-shrink: 0;
+  padding: 8px 32px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.gallery-counter {
+  font-size: 11px;
+  color: #999;
+  letter-spacing: 0.04em;
+}
+
+.gallery-caption {
+  font-size: 13px;
+  color: #444;
+  min-height: 18px;
+}
+
+.gallery-thumbs {
+  display: flex;
+  gap: 3px;
+  overflow-x: auto;
+  padding: 4px 0;
+  max-width: 100%;
+  justify-content: center;
+  scrollbar-width: none;
+}
+
+.gallery-thumbs::-webkit-scrollbar { display: none; }
+
+.gallery-thumbs img {
+  width: 44px;
+  height: 33px;
+  object-fit: cover;
+  cursor: pointer;
+  opacity: 0.4;
+  transition: opacity 0.15s;
+  flex-shrink: 0;
+  display: block;
+}
+
+.gallery-thumbs img.active,
+.gallery-thumbs img:hover {
+  opacity: 1;
+}
+
+/* ── Video page ────────────────────────────────────────── */
+.video-page {
+  padding: 60px 48px 60px;
+  max-width: 1100px;
+}
+
+.video-page h2 {
+  display: none;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 56px;
+}
+
+.video-item {}
+
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.video-title {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #444;
+}
+
+/* ── Text/article page ─────────────────────────────────── */
+.text-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.text-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  color: #000;
+  opacity: 0.85;
+  font-size: 18px;
+  transition: background 0.15s, opacity 0.15s;
+}
+
+.text-arrow:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* Placér pilene midt mellem artikel og sidekant */
+.text-arrow#prev { left: max(28px, calc(50% - 540px)); }
+.text-arrow#next { right: max(28px, calc(50% - 540px)); }
+
+.text-stage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 80px 90px 24px;
+  overflow-y: auto;
+}
+
+.article {
+  max-width: 640px;
+  width: 100%;
+  font-family: 'IBM Plex Mono', 'Input Mono Narrow', monospace;
+  font-weight: 200;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #222;
+}
+
+.article-title {
+  font-family: 'Inter', 'Benton Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1.25;
+  color: #111;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+.article-meta {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 28px;
+}
+
+.article-body p {
+  margin-bottom: 18px;
+}
+
+.article-body h3 {
+  font-family: 'Inter', 'Benton Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: #111;
+  margin: 34px 0 14px;
+  letter-spacing: -0.005em;
+}
+
+.article-body em { font-style: italic; }
+.article-body strong { font-weight: 600; color: #111; }
+
+.article-body img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 8px 0 6px;
+}
+
+.article-body .photo-credit {
+  font-size: 11px;
+  color: #888;
+  margin-bottom: 28px;
+}
+
+.article-body .lead {
+  font-weight: 400;
+  color: #111;
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.text-footer {
+  flex-shrink: 0;
+  padding: 8px 32px 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.text-counter {
+  font-size: 12px;
+  color: #000;
+  letter-spacing: 0.04em;
+}
+
+/* ── Mobile menu toggle (hamburger) ────────────────────── */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  width: 36px;
+  height: 32px;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 20px;
+  height: 1.5px;
+  background: #222;
+  margin: 4px auto;
+  transition: transform 0.25s, opacity 0.2s;
+}
+
+/* ── Mobile ────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .layout { flex-direction: column; }
+  .main   { margin-left: 0; }
+
+  /* Sidebar bliver til en top-bar */
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 16px 20px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .sidebar-logo {
+    font-size: 18px;
+    margin-bottom: 0;
+  }
+
+  /* Vis hamburger-knappen */
+  .menu-toggle {
+    display: block;
+    position: absolute;
+    top: 12px;
+    right: 14px;
+  }
+
+  .sidebar.menu-open .menu-toggle span:nth-child(1) {
+    transform: translateY(5.5px) rotate(45deg);
+  }
+  .sidebar.menu-open .menu-toggle span:nth-child(2) {
+    opacity: 0;
+  }
+  .sidebar.menu-open .menu-toggle span:nth-child(3) {
+    transform: translateY(-5.5px) rotate(-45deg);
+  }
+
+  /* Skjul menu/Instagram indtil hamburger trykkes */
+  .menu-nav, .sidebar-footer {
+    display: none;
+  }
+
+  .sidebar.menu-open .menu-nav {
+    display: block;
+    margin-top: 16px;
+  }
+
+  .sidebar.menu-open .sidebar-footer {
+    display: block;
+    margin-top: 14px;
+  }
+
+  /* Når menu er åben, vis altid fotografi-undermenu (ingen hover på touch) */
+  .sidebar.menu-open .menu-nav .has-dropdown .dropdown {
+    max-height: 200px;
+    margin-bottom: 12px;
+  }
+
+  /* Pilen roterer også på mobil når menuen er åben */
+  .sidebar.menu-open .menu-nav .has-dropdown .category-name::after {
+    transform: rotate(90deg);
+  }
+
+  /* Galleri */
+  .gallery-page { height: calc(100vh - 70px); }
+  .gallery-stage { padding: 24px 40px 12px; }
+  #prev { left: 4px; }
+  #next { right: 4px; }
+
+  /* Tekst-side */
+  .text-stage {
+    padding: 32px 36px 24px;
+  }
+  .article-title { font-size: 22px; line-height: 1.3; }
+  .article { font-size: 14px; }
+  .article-body h3 { font-size: 16px; }
+
+  .text-arrow {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+  .text-arrow#prev { left: 6px; }
+  .text-arrow#next { right: 6px; }
+
+  /* Video */
+  .video-page { padding: 24px 20px; }
+  .video-grid { grid-template-columns: 1fr; gap: 28px; }
+}
