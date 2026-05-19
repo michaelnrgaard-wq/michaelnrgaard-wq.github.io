@@ -408,6 +408,44 @@ ul { list-style: none; }
   margin-bottom: 28px;
 }
 
+/* ── Inline-galleri inde i en artikel ──────────────────── */
+.inline-gallery {
+  margin: 28px 0 24px;
+  width: 100%;
+}
+
+.inline-gallery .ig-stage {
+  position: relative;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+}
+
+.inline-gallery .ig-image {
+  max-width: 100%;
+  max-height: 70vh;
+  display: block;
+  transition: opacity 0.2s ease;
+}
+
+.inline-gallery .ig-counter {
+  margin: 10px 0 0;
+  font-size: 11px;
+  color: #888;
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+
+.inline-gallery .ig-stage.cursor-prev {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 32 32'><path d='M20 6L8 16L20 26' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/><path d='M20 6L8 16L20 26' fill='none' stroke='white' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/></svg>") 11 11, w-resize;
+}
+
+.inline-gallery .ig-stage.cursor-next {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 32 32'><path d='M12 6L24 16L12 26' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/><path d='M12 6L24 16L12 26' fill='none' stroke='white' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/></svg>") 11 11, e-resize;
+}
+
 .text-footer {
   flex-shrink: 0;
   padding: 8px 32px 24px;
