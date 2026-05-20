@@ -1,6 +1,19 @@
 /* ── Fonts ─────────────────────────────────────────────── */
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@200;300&family=Inter:wght@700&display=swap');
 
+/* ── Skjult tekst til søgemaskiner (sr-only) ────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ── Reset ─────────────────────────────────────────────── */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
