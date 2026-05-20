@@ -99,7 +99,9 @@
       <button class="gallery-arrow text-arrow" id="prev" aria-label="Forrige artikel">&#8592;</button>
       <button class="gallery-arrow text-arrow" id="next" aria-label="Næste artikel">&#8594;</button>
       <div class="text-stage" id="text-stage">
-        <article class="article">
+        <div class="article-index" id="article-index"></div>
+        <article class="article" id="article-view" style="display:none;">
+          <span class="back-link" id="back-link">← tilbage</span>
           <h2 class="article-title" id="article-title"></h2>
           <p class="article-meta"  id="article-meta"></p>
           <div class="article-body" id="article-body"></div>
@@ -123,7 +125,8 @@
   window.articles = [
     {
       title: "Andreas døde i tragisk arbejdsulykke: Nåede aldrig at blive gammel på sin drømmeø",
-      meta:  "Fyns Amts Avis · 8. juni 2021",
+      meta:  "Fyns Amts Avis",
+      thumb: "images/tekst/andreas/02-portraet.jpg",
       body: `
         <p class="lead">Han talte otte sprog, spiste middag med den ukrainske mafia og plantede solsikker på Ærø. Andreas levede et hektisk liv. Han kæmpede sin vej fra trange kår i Polen til en tilværelse i Danmark, som han håbede ville vare i mange år, men desværre blev afbrudt alt for tidligt i en tragisk arbejdsulykke.</p>
 
@@ -265,6 +268,7 @@
     {
       title: "Kom med i de forbudte lysters klub",
       meta:  "Fyens Stiftstidende",
+      thumb: "images/tekst/sexkino/01.jpg",
       body: `
         <video src="images/tekst/sexkino/00-intro.mp4" class="banner" autoplay loop muted playsinline></video>
 
@@ -340,6 +344,7 @@
     {
       title: "Mads døde kun 24 år gammel: Hans internetfamilie var der, da hans krop gav efter til kræften",
       meta:  "JydskeVestkysten",
+      thumb: "images/tekst/mads/01.jpg",
       body: `
         <p class="lead">Kræften var uundgåelig for Mads Jessen Andersen. Men han havde alligevel ikke regnet med, at den allerede ville ramme i de tidlige teenageår. Han virkede som en ensom person, der ikke socialiserede meget, men indeni computerens uendelige verden havde han venner, og der var han fri.</p>
 
@@ -413,6 +418,7 @@
     {
       title: "Han har kun få måneder tilbage at leve i: Alligevel drog Pawel ud på en månedlang kajaktur hele vejen rundt om Danmark",
       meta:  "JydskeVestkysten",
+      thumb: "images/tekst/pawel/01.jpg",
       body: `
         <p class="lead">Med en terminal kræftdiagnose med i bagagen og en næsten umulig opgave foran sig tog Pawel Pietruczuk ud på, hvad der måske kan være hans sidste eventyr, inden han dør.</p>
 
@@ -490,6 +496,7 @@
     {
       title: "Jeg husker ikke andet end bomberne: 21-årige Sahars familie må gerne blive, men efter syv år i Danmark skal hun sendes tilbage til Syrien",
       meta:  "JydskeVestkysten",
+      thumb: "images/tekst/sahar/01.jpg",
       body: `
         <p class="lead">Hun kan ikke huske Syrien, og hun ser Danmark som sit hjemland. Men Udlændingestyrelsen har vurderet, at Sahar Al Refaie skal sendes ud af Danmark. Så nu står den 21-årige kvinde til at skulle skifte HF og en rolig tilværelse i Aabenraa ud med et ophold på udrejsecenteret Kærshovedgaard på ubestemt tid.</p>
 
