@@ -589,4 +589,8 @@ ul { list-style: none; }
   /* Video */
   .video-page { padding: 24px 20px; }
   .video-grid { grid-template-columns: 1fr; gap: 28px; }
+
+  /* Om-side */
+  .om-layout { flex-direction: column; }
+  .om-photo { width: 100% !important; max-width: 320px; }
 }
