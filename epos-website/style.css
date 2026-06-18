@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap');
+
 /* ==========================================================================
    Efterskolen Epos — style.css
    ========================================================================== */
@@ -65,6 +67,19 @@ ul { padding: 0; margin: 0; list-style: none; }
   padding: 0 2rem;
 }
 .text-center { text-align: center; }
+
+/* Visually hidden, but available to screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 
 /* --- Animated inline links --- */
 .inline-link {
@@ -467,16 +482,12 @@ body.menu-is-open .menu-scrim {
   background: var(--color-primary-dark);
 }
 .profile-hero-img {
+  display: block;
   width: 100%;
   height: clamp(280px, 45vw, 520px);
+  object-fit: cover;
+  object-position: center 28%;
   background: var(--color-primary-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(255,255,255,.35);
-  font-size: .85rem;
-  font-style: italic;
-  border-radius: 0;
 }
 .profile-hero-content {
   background: var(--color-primary);
@@ -522,17 +533,27 @@ body.menu-is-open .menu-scrim {
 }
 .hero-bg-img {
   position: absolute;
-  inset: -6%;
+  inset: -10%;
   background: url('/epos-website/assets/img/epos-front.jpg') center/cover no-repeat;
-  filter: blur(10px);
-  transform: scale(1.04);
+  filter: blur(6px) saturate(1.05);
   z-index: 0;
+  will-change: transform;
 }
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.45);
   z-index: 1;
+  background:
+    radial-gradient(120% 95% at 50% 12%, rgba(30,22,54,.08) 0%, rgba(30,22,54,.52) 56%, rgba(30,22,54,.88) 100%),
+    linear-gradient(to bottom, rgba(30,22,54,.30) 0%, rgba(46,36,82,.22) 42%, rgba(30,22,54,.72) 100%);
+}
+/* Cinematic vignette on the hero */
+.hero-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 220px 60px rgba(15,10,30,.55);
+  pointer-events: none;
 }
 .hero {
   position: relative;
@@ -557,15 +578,19 @@ body.menu-is-open .menu-scrim {
   margin-bottom: 1.25rem;
 }
 .hero-content h1 {
-  font-size: clamp(2.2rem, 5vw, 4rem);
-  margin-bottom: 1.25rem;
-  line-height: 1.1;
+  font-size: clamp(2.4rem, 5.4vw, 4.4rem);
+  margin-bottom: 1.35rem;
+  line-height: 1.08;
+  color: #FDFBF7;
+  letter-spacing: .5px;
+  text-shadow: 0 2px 34px rgba(15,10,30,.55);
 }
 .hero-content p {
   font-size: 1.15rem;
-  color: #f5f0e8;
+  color: rgba(255,255,255,.86);
   margin-bottom: 2rem;
   max-width: 480px;
+  text-shadow: 0 1px 16px rgba(15,10,30,.4);
 }
 
 /* Portal visual */
@@ -790,42 +815,140 @@ body.menu-is-open .menu-scrim {
    ========================================================================== */
 .profile-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.25rem;
+  margin-top: 3rem;
 }
+@media (max-width: 900px) {
+  .profile-cards-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 600px) {
+  .profile-cards-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
 .profile-card {
-  background: var(--color-surface);
+  position: relative;
   border-radius: var(--radius-lg);
-  padding: 2rem 1.5rem;
-  text-align: center;
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--color-border);
+  overflow: hidden;
   text-decoration: none;
-  color: inherit;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+  color: #fff;
+  display: block;
+  aspect-ratio: 3 / 4;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  transition: transform 350ms cubic-bezier(0.25, 1, 0.5, 1),
+              box-shadow 350ms cubic-bezier(0.25, 1, 0.5, 1);
 }
 .profile-card:hover {
-  transform: translateY(-6px) scale(1.02);
+  transform: translateY(-8px) scale(1.03);
   box-shadow: var(--shadow-lg);
-  border-color: var(--color-accent);
 }
-.profile-card-icon {
-  width: 64px;
-  height: 64px;
-  color: var(--color-accent);
-  margin-bottom: 1.25rem;
+.profile-card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 600ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+.profile-card:hover .profile-card-img {
+  transform: scale(1.08);
+}
+.profile-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(30, 22, 54, 0.92) 0%,
+    rgba(30, 22, 54, 0.4) 50%,
+    rgba(30, 22, 54, 0.08) 100%
+  );
+  transition: background 350ms ease;
+}
+.profile-card:hover .profile-card-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(30, 22, 54, 0.96) 0%,
+    rgba(30, 22, 54, 0.55) 55%,
+    rgba(30, 22, 54, 0.15) 100%
+  );
+}
+.profile-card-body {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem 1.25rem 1.25rem;
 }
 .profile-card h3 {
-  font-size: 1.1rem;
-  margin-bottom: .5rem;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: .35rem;
+  line-height: 1.2;
 }
 .profile-card p {
-  font-size: .875rem;
-  color: var(--color-muted);
-  line-height: 1.5;
+  font-size: .8rem;
+  color: rgba(255,255,255,.75);
+  line-height: 1.45;
+  margin: 0;
+}
+.profile-card-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  margin-top: .6rem;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 250ms ease, transform 250ms ease;
+}
+.profile-card:hover .profile-card-arrow {
+  opacity: 1;
+  transform: translateY(0);
+}
+.profile-card-arrow::after {
+  content: '→';
+}
+
+/* ==========================================================================
+   IRIS WIPE TRANSITION (profile card click → colored circle fills the screen)
+   Inspired by bgiakademiet.dk's line transition. The circle fully covers the
+   screen in the brand colour BEFORE navigating; the destination page starts
+   under a matching cover that fades out — so the reload is invisible.
+   ========================================================================== */
+.iris-wipe {
+  position: fixed;
+  border-radius: 50%;
+  background: var(--color-primary-dark);
+  z-index: 9999;
+  pointer-events: none;
+  transform: scale(0);
+  will-change: transform;
+  box-shadow: 0 0 80px 20px rgba(30, 22, 54, .6);
+}
+
+/* Landing "settle" on the hero image when arriving via the wipe */
+html.dive-enter .profile-hero-img {
+  animation: heroSettle 700ms cubic-bezier(0.16, 1, 0.3, 1) 120ms both;
+}
+@keyframes heroSettle {
+  0%   { transform: scale(1.1); filter: brightness(1.25); }
+  100% { transform: scale(1);   filter: brightness(1); }
+}
+html.dive-enter .profile-hero-content {
+  animation: heroRise 650ms cubic-bezier(0.16, 1, 0.3, 1) 220ms both;
+}
+@keyframes heroRise {
+  0%   { opacity: 0; transform: translateY(22px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.dive-enter .profile-hero-img,
+  html.dive-enter .profile-hero-content { animation: none; }
 }
 
 /* ==========================================================================
@@ -1343,22 +1466,23 @@ body.menu-is-open .menu-scrim {
 }
 
 /* ==========================================================================
-   SCROLL REVEAL ANIMATIONS
-   Note: prefers-reduced-motion INTENTIONALLY NOT respected per brief.
+   SCROLL REVEAL ANIMATIONS — filmic: long, eased, settles softly
    ========================================================================== */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 450ms ease, transform 450ms ease;
+  transform: translateY(34px);
+  transition: opacity 900ms cubic-bezier(.16, 1, .3, 1),
+              transform 900ms cubic-bezier(.16, 1, .3, 1);
+  will-change: opacity, transform;
 }
 .reveal.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
-.reveal-delay-1 { transition-delay: 100ms; }
-.reveal-delay-2 { transition-delay: 200ms; }
-.reveal-delay-3 { transition-delay: 300ms; }
-.reveal-delay-4 { transition-delay: 400ms; }
+.reveal-delay-1 { transition-delay: 90ms; }
+.reveal-delay-2 { transition-delay: 180ms; }
+.reveal-delay-3 { transition-delay: 270ms; }
+.reveal-delay-4 { transition-delay: 360ms; }
 
 /* ==========================================================================
    HIGHLIGHT STRIP (callout box)
@@ -1389,3 +1513,248 @@ body.menu-is-open .menu-scrim {
   .cards-grid, .cards-grid-2 { grid-template-columns: 1fr; }
   .profile-cards-grid { grid-template-columns: 1fr 1fr; }
 }
+
+/* ==========================================================================
+   FILMIC POLISH LAYER
+   Smooth scroll (Lenis), parallax depth, ambient atmosphere, the hero portal
+   signature, and a global reduced-motion fallback. Appended last so it layers
+   cleanly over the base styles above.
+   ========================================================================== */
+
+/* --- Lenis smooth scroll (library-required) --- */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
+
+/* --- Parallax: JS sets --py per frame --- */
+[data-parallax], .page-hero-blob { will-change: transform; }
+[data-parallax] { transform: translate3d(0, var(--py, 0px), 0); }
+.page-hero-blob { transform: translate3d(0, var(--py, 0px), 0); }
+.hero-wrap .hero-bg-img { transform: translate3d(0, var(--py, 0px), 0) scale(1.16); }
+
+/* --- Hero portal: the signature element --- */
+.hero-visual { will-change: transform; }
+.portal-wrapper { animation: portal-float 9s ease-in-out infinite; }
+@keyframes portal-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-14px); }
+}
+.portal-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: -16%;
+  z-index: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg,
+    rgba(212,175,55,0)   0deg,
+    rgba(229,198,85,.55) 65deg,
+    rgba(212,175,55,0)   150deg,
+    rgba(212,175,55,0)   215deg,
+    rgba(229,198,85,.35) 295deg,
+    rgba(212,175,55,0)   360deg);
+  filter: blur(28px);
+  opacity: .75;
+  animation: portal-spin 16s linear infinite;
+}
+@keyframes portal-spin { to { transform: rotate(360deg); } }
+.portal-glow  { z-index: 1; }
+.portal-frame { z-index: 2; }
+.portal-img-placeholder {
+  flex-direction: column;
+  gap: .9rem;
+  background: radial-gradient(circle at 50% 38%, #4a3a7a 0%, var(--color-primary-dark) 72%);
+}
+.portal-img-placeholder::before {
+  content: '';
+  width: 0; height: 0;
+  border-left: 26px solid rgba(255,255,255,.9);
+  border-top: 17px solid transparent;
+  border-bottom: 17px solid transparent;
+  margin-left: 7px;
+  filter: drop-shadow(0 0 20px rgba(212,175,55,.55));
+}
+
+/* --- Hero scroll cue --- */
+.scroll-cue {
+  position: absolute;
+  bottom: 1.7rem; left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .7rem;
+  color: rgba(255,255,255,.72);
+  font-size: .68rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.scroll-cue::after {
+  content: '';
+  width: 1px; height: 40px;
+  background: linear-gradient(to bottom, var(--color-accent), transparent);
+  transform-origin: top center;
+  animation: scroll-cue-line 2.4s cubic-bezier(.7,0,.3,1) infinite;
+}
+@keyframes scroll-cue-line {
+  0%   { transform: scaleY(0); opacity: 0; }
+  35%  { opacity: 1; }
+  100% { transform: scaleY(1); opacity: 0; }
+}
+
+/* --- Ambient gold drift in dark sections (global) --- */
+.section-dark { position: relative; overflow: hidden; }
+.section-dark::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  width: 70vw; height: 70vw;
+  max-width: 880px; max-height: 880px;
+  top: -22%; left: -12%;
+  background: radial-gradient(circle, rgba(212,175,55,.11) 0%, transparent 62%);
+  pointer-events: none;
+  animation: ambient-drift 20s ease-in-out infinite alternate;
+}
+@keyframes ambient-drift {
+  from { transform: translate(0, 0); }
+  to   { transform: translate(14%, 9%); }
+}
+.section-dark .container { position: relative; z-index: 1; }
+
+/* --- Atmospheric depth on inner-page heroes (global, all subpages) --- */
+.page-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(58% 80% at 82% -12%, rgba(212,175,55,.16), transparent 60%),
+    radial-gradient(52% 75% at 8% 112%, rgba(68,54,110,.55), transparent 60%);
+  pointer-events: none;
+}
+.page-hero-eyebrow,
+.page-hero h1,
+.page-hero p { position: relative; z-index: 1; }
+
+/* --- Tactile hover polish --- */
+.btn-primary { transition: background var(--transition), transform var(--transition), box-shadow var(--transition); }
+.btn-primary:hover { box-shadow: 0 10px 30px rgba(212,175,55,.4), 0 0 0 1px rgba(229,198,85,.35); }
+.card, .profile-card { will-change: transform; }
+.card-arrow { transition: gap var(--transition); }
+
+/* --- Global reduced-motion fallback --- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-wrap .hero-bg-img,
+  [data-parallax],
+  .page-hero-blob { transform: none !important; }
+  .portal-wrapper,
+  .portal-wrapper::before,
+  .portal-glow,
+  .section-dark::before,
+  .scroll-cue::after { animation: none !important; }
+  .reveal { transition-duration: 1ms; }
+}
+
+/* ==========================================================================
+   DARK ART DIRECTION — twilight is the default. Long-reading pages opt back
+   into light via <body class="page-light">. Mostly rides on the tokens below;
+   only genuinely hardcoded-light components get explicit overrides.
+   ========================================================================== */
+:root {
+  --color-bg:        #160F28;
+  --color-bg-2:      #1C1436;
+  --color-surface:   #241A42;
+  --color-text:      #ECE6F6;
+  --color-muted:     #ABA1C4;
+  --color-border:    rgba(255,255,255,.12);
+}
+body { background: var(--color-bg); color: var(--color-text); }
+h1, h2, h3, h4 { color: #F4EFFC; }
+a, p a, li a, .inline-link { color: var(--color-accent); }
+.section, .section-lg { background: transparent; }
+.section-dark { background: var(--color-bg-2); }
+.section-dark h2, .section-dark h3 { color: #F4EFFC; }
+.section-label { color: var(--color-accent); }
+.section-intro { color: var(--color-muted); }
+
+/* Surfaces / cards */
+.card { background: var(--color-surface); border-color: var(--color-border); }
+.card h3 { color: #F4EFFC; }
+.card p { color: var(--color-muted); }
+/* Foreground accents that were authored for the light base and need to read on
+   twilight surfaces — the gold matches the profile-card arrows already in use. */
+.card-arrow { color: var(--color-accent); }
+.team-name { color: #F4EFFC; }
+.profile-detail-back { color: var(--color-muted); }
+.profile-detail-back:hover { color: var(--color-accent); }
+.img-placeholder {
+  background: linear-gradient(135deg, #2A2050 0%, #160F28 100%);
+  color: rgba(255,255,255,.45);
+  border: 1px solid var(--color-border);
+}
+
+/* Buttons on dark */
+.btn-outline { color: #F4EFFC; border-color: rgba(255,255,255,.45); }
+.btn-outline:hover { background: #F4EFFC; color: var(--color-primary-dark); }
+
+/* Forms on dark */
+.form-card { background: var(--color-surface); border: 1px solid var(--color-border); }
+input, textarea, select { background: rgba(255,255,255,.05); color: var(--color-text); border-color: var(--color-border); }
+input::placeholder, textarea::placeholder { color: rgba(255,255,255,.42); }
+
+/* Cookie banner / floating CTA on dark */
+.cookie-banner { background: var(--color-bg-2); border-top: 1px solid var(--color-border); }
+.cookie-content p { color: var(--color-text); }
+.floating-cta { background: var(--color-surface); border: 1px solid var(--color-border); }
+
+/* Header: translucent twilight glass */
+.site-header {
+  background: rgba(22,15,40,.72);
+  backdrop-filter: blur(14px) saturate(1.1);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+.site-header.is-scrolled { background: rgba(17,11,31,.88); }
+
+/* Typography: bigger, more confident + the ink accent */
+.hero-content h1 { font-size: clamp(2.6rem, 6vw, 5rem); }
+.section-title { font-size: clamp(2rem, 4vw, 3.2rem); }
+.ink {
+  font-family: 'Pinyon Script', cursive;
+  font-weight: 400;
+  color: var(--color-accent);
+  font-size: 1.45em;
+  line-height: .7;
+  padding: 0 .06em;
+}
+
+/* ==========================================================================
+   LIGHT PAGES — opt-in for long reading (FAQ, pædagogik, praktisk info)
+   ========================================================================== */
+body.page-light {
+  --color-bg:      #FDFBF7;
+  --color-bg-2:    #F3EFE7;
+  --color-surface: #FFFFFF;
+  --color-text:    #1C1926;
+  --color-muted:   #6B6480;
+  --color-border:  #E8E4DC;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+body.page-light h1, body.page-light h2, body.page-light h3, body.page-light h4 { color: var(--color-primary); }
+body.page-light .section-dark { background: var(--color-primary); }
+body.page-light .section-dark h2, body.page-light .section-dark h3 { color: var(--color-accent); }
+body.page-light a, body.page-light p a, body.page-light li a { color: var(--color-primary); }
+body.page-light .img-placeholder { background: var(--color-border); color: var(--color-muted); }
+body.page-light .btn-outline { color: var(--color-primary); border-color: currentColor; }
+body.page-light .btn-outline:hover { background: var(--color-primary); color: #fff; }
+body.page-light input, body.page-light textarea, body.page-light select { background: #fff; color: var(--color-text); }
+body.page-light .site-header { background: var(--color-primary); backdrop-filter: none; -webkit-backdrop-filter: none; }
+body.page-light .cookie-banner { background: #fff; }
+/* Keep the twilight foreground accents readable if a long-reading page opts into light */
+body.page-light .card-arrow { color: var(--color-primary); }
+body.page-light .team-name { color: var(--color-primary); }
+body.page-light .profile-detail-back:hover { color: var(--color-primary); }

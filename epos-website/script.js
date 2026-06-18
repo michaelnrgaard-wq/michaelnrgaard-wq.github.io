@@ -1,11 +1,109 @@
-document.addEventListener('DOMContentLoaded', () => {
+/* ==========================================================================
+   Efterskolen Epos — script.js
 
-  /* ===== 0. Scrim for drawer ===== */
+   Barba-ready structure:
+   - initGlobal()  runs ONCE ever. Holds things that persist across pages
+                   (drawer scrim, sticky header, menu, floating CTA, cookie
+                   banner). Guarded so it can never bind twice.
+   - initPage()    runs on every page load, and is safe to call AGAIN after a
+                   future client-side page swap. Holds everything tied to the
+                   page content (scroll reveals, videos, FAQ, forms, the
+                   profile-card transition, the reveal cover).
+
+   Today both run once on DOMContentLoaded. When/if we adopt Barba.js later,
+   leave initGlobal() on first load and call initPage() inside
+   barba.hooks.after() after each swap — that's the whole switch.
+   ========================================================================== */
+
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* Render any consent-gated videos (shared by the cookie buttons and initPage) */
+function loadConsentedContent() {
+  document.querySelectorAll('[data-consent="video"]').forEach(el => {
+    const src = el.dataset.src;
+    el.innerHTML = src
+      ? `<iframe src="${src}" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="position:absolute;inset:0;width:100%;height:100%;"></iframe>`
+      : `<div style="background:var(--color-primary);color:#fff;width:100%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-lg);">Video klar til indlejring</div>`;
+  });
+}
+
+/* ==========================================================================
+   SMOOTH SCROLL (Lenis) + PARALLAX DEPTH
+   ========================================================================== */
+let lenis = null;
+
+function initSmoothScroll() {
+  if (prefersReducedMotion || window.__lenisStarted) return;
+  window.__lenisStarted = true;
+  const s = document.createElement('script');
+  s.src = '/epos-website/assets/js/lenis.min.js';
+  s.onload = () => {
+    if (!window.Lenis) return;
+    lenis = new window.Lenis({
+      duration: 1.05,
+      easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      touchMultiplier: 1.5
+    });
+    window.__lenis = lenis;
+    const raf = time => { lenis.raf(time); requestAnimationFrame(raf); };
+    requestAnimationFrame(raf);
+
+    /* Smooth in-page anchor links */
+    document.addEventListener('click', e => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+      const sel = a.getAttribute('href');
+      if (sel.length < 2) return;
+      const target = document.querySelector(sel);
+      if (target) { e.preventDefault(); lenis.scrollTo(target, { offset: -90 }); }
+    });
+  };
+  s.onerror = () => { /* fall back silently to native scroll */ };
+  document.head.appendChild(s);
+}
+
+let parallaxItems = [];
+function refreshParallax() {
+  if (prefersReducedMotion) return;
+  parallaxItems = [...document.querySelectorAll('[data-parallax], .page-hero-blob')].map(el => {
+    el.style.setProperty('--py', '0px');
+    const r = el.getBoundingClientRect();
+    const speed = el.dataset.parallax !== undefined
+      ? parseFloat(el.dataset.parallax)
+      : -0.12; /* default for .page-hero-blob */
+    return { el, base: r.top + window.scrollY + r.height / 2, speed };
+  });
+}
+function startParallax() {
+  if (prefersReducedMotion || window.__parallaxStarted) return;
+  window.__parallaxStarted = true;
+  const tick = () => {
+    const vCenter = window.scrollY + window.innerHeight / 2;
+    for (const it of parallaxItems) {
+      it.el.style.setProperty('--py', ((vCenter - it.base) * it.speed).toFixed(1) + 'px');
+    }
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+  let rt;
+  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(refreshParallax, 150); }, { passive: true });
+}
+
+/* ==========================================================================
+   ONE-TIME GLOBAL SETUP (persists across pages)
+   ========================================================================== */
+let globalReady = false;
+function initGlobal() {
+  if (globalReady) return;
+  globalReady = true;
+
+  /* ----- Scrim for drawer ----- */
   const scrim = document.createElement('div');
   scrim.className = 'menu-scrim';
   document.body.appendChild(scrim);
 
-  /* ===== 1. Sticky header shrink ===== */
+  /* ----- Sticky header shrink ----- */
   const header = document.getElementById('site-header');
   if (header) {
     window.addEventListener('scroll', () => {
@@ -13,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
   }
 
-  /* ===== 2. Fullscreen menu + flyout submenus ===== */
+  /* ----- Fullscreen menu + flyout submenus ----- */
   const menuOpen    = document.getElementById('menu-open');
   const menuClose   = document.getElementById('menu-close');
   const menuOverlay = document.getElementById('fullscreen-menu');
@@ -26,6 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
       menuOverlay.setAttribute('aria-hidden', 'false');
       menuOpen.setAttribute('aria-expanded', 'true');
       document.body.classList.add('menu-is-open');
+      if (lenis) lenis.stop();
       menuClose.focus();
     }
 
@@ -39,6 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
       subCols.forEach(s => { s.classList.remove('is-open'); s.setAttribute('aria-hidden', 'true'); });
       subBtns.forEach(b => b.setAttribute('aria-expanded', 'false'));
       if (mainCol) mainCol.classList.remove('submenu-active');
+      if (lenis) lenis.start();
       menuOpen.focus();
     }
 
@@ -85,20 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ===== 3. Scroll reveals (IntersectionObserver) ===== */
-  const reveals = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window && reveals.length) {
-    const obs = new IntersectionObserver((entries, o) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('is-visible'); o.unobserve(e.target); }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-    reveals.forEach(el => obs.observe(el));
-  } else {
-    reveals.forEach(el => el.classList.add('is-visible'));
-  }
-
-  /* ===== 4. Floating CTA bubble ===== */
+  /* ----- Floating CTA bubble ----- */
   const floatingCta = document.getElementById('floating-cta');
   const closeCtaBtn = document.getElementById('close-cta');
   if (floatingCta && closeCtaBtn) {
@@ -111,26 +198,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ===== 5. Cookie banner + video consent ===== */
+  /* ----- Cookie banner (buttons + initial show) ----- */
   const cookieBanner = document.getElementById('cookie-banner');
   const btnAccept    = document.getElementById('cookie-accept');
   const btnReject    = document.getElementById('cookie-reject');
-
-  function loadConsentedContent() {
-    document.querySelectorAll('[data-consent="video"]').forEach(el => {
-      const src = el.dataset.src;
-      el.innerHTML = src
-        ? `<iframe src="${src}" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="position:absolute;inset:0;width:100%;height:100%;"></iframe>`
-        : `<div style="background:var(--color-primary);color:#fff;width:100%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-lg);">Video klar til indlejring</div>`;
-    });
-  }
 
   if (cookieBanner) {
     const stored = localStorage.getItem('cookieConsent');
     if (!stored) {
       setTimeout(() => { cookieBanner.classList.add('is-visible'); cookieBanner.setAttribute('aria-hidden', 'false'); }, 800);
-    } else if (stored === 'accepted') {
-      loadConsentedContent();
     }
 
     btnAccept && btnAccept.addEventListener('click', () => {
@@ -144,8 +220,42 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ===== 6. FAQ accordion ===== */
+  /* Smooth scroll + parallax depth */
+  initSmoothScroll();
+  startParallax();
+  window.addEventListener('load', refreshParallax);
+}
+
+/* ==========================================================================
+   PER-PAGE SETUP (safe to re-run after a page swap)
+   ========================================================================== */
+function initPage() {
+
+  /* Recompute parallax anchors for this page's content */
+  refreshParallax();
+
+  /* ----- Scroll reveals (IntersectionObserver) ----- */
+  const reveals = document.querySelectorAll('.reveal:not(.is-visible)');
+  if ('IntersectionObserver' in window && reveals.length) {
+    const obs = new IntersectionObserver((entries, o) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('is-visible'); o.unobserve(e.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(el => obs.observe(el));
+  } else {
+    reveals.forEach(el => el.classList.add('is-visible'));
+  }
+
+  /* ----- Render videos if cookie consent was already given ----- */
+  if (localStorage.getItem('cookieConsent') === 'accepted') {
+    loadConsentedContent();
+  }
+
+  /* ----- FAQ accordion ----- */
   document.querySelectorAll('.faq-question').forEach(btn => {
+    if (btn.dataset.bound) return;
+    btn.dataset.bound = '1';
     btn.addEventListener('click', () => {
       const item    = btn.closest('.faq-item');
       const wasOpen = item.classList.contains('is-open');
@@ -154,15 +264,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ===== 7. Newsletter form (client-side validation only) ===== */
+  /* ----- Newsletter form (client-side validation only) ----- */
   document.querySelectorAll('.newsletter-form').forEach(form => {
+    if (form.dataset.bound) return;
+    form.dataset.bound = '1';
     form.addEventListener('submit', e => {
       e.preventDefault();
       const input = form.querySelector('input[type="email"]');
       if (input && input.value) {
         input.value = '';
         const msg = document.createElement('p');
-        msg.style.cssText = 'color:var(--color-primary);font-weight:600;margin-top:.75rem;';
+        msg.style.cssText = 'color:var(--color-accent);font-weight:600;margin-top:.75rem;';
         msg.textContent = 'Tak! Du er nu tilmeldt vores nyhedsbrev.';
         form.appendChild(msg);
         setTimeout(() => msg.remove(), 5000);
@@ -170,9 +282,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ===== 8. Contact form (client-side only, action = placeholder) ===== */
+  /* ----- Contact form (client-side only, action = placeholder) ----- */
   const contactForm = document.getElementById('contact-form');
-  if (contactForm) {
+  if (contactForm && !contactForm.dataset.bound) {
+    contactForm.dataset.bound = '1';
     contactForm.addEventListener('submit', e => {
       e.preventDefault();
       const btn = contactForm.querySelector('button[type="submit"]');
@@ -181,4 +294,78 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  /* ----- Iris-wipe transition (profile cards → colored circle fills screen) -----
+     Modelled on bgiakademiet.dk's line transition. Instead of an AJAX page swap
+     (Barba.js), we cover the screen completely in the brand colour BEFORE
+     navigating, and the destination page starts under a matching cover that fades
+     out — so the page reload is hidden behind a continuous colour. */
+  document.querySelectorAll('[data-profile-link]').forEach(card => {
+    if (card.dataset.bound) return;
+    card.dataset.bound = '1';
+    card.addEventListener('click', e => {
+      const href = card.getAttribute('href');
+      if (!href) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return; // allow open-in-new-tab
+      e.preventDefault();
+
+      if (prefersReducedMotion) {
+        try { sessionStorage.setItem('portalDive', '1'); } catch (err) {}
+        window.location.href = href;
+        return;
+      }
+
+      const rect = card.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+
+      /* Radius needed to reach the farthest corner of the viewport */
+      const farX = Math.max(cx, window.innerWidth - cx);
+      const farY = Math.max(cy, window.innerHeight - cy);
+      const radius = Math.hypot(farX, farY);
+
+      const BASE = 80;                              // base circle diameter
+      const scale = (radius * 2) / BASE + 1;        // +1 = small safety overshoot
+
+      const iris = document.createElement('div');
+      iris.className = 'iris-wipe';
+      iris.style.width  = BASE + 'px';
+      iris.style.height = BASE + 'px';
+      iris.style.left   = (cx - BASE / 2) + 'px';
+      iris.style.top    = (cy - BASE / 2) + 'px';
+      document.body.appendChild(iris);
+
+      /* Flag the dive so the destination page reveals from a matching cover */
+      try { sessionStorage.setItem('portalDive', '1'); } catch (err) {}
+
+      let navigated = false;
+      const go = () => { if (!navigated) { navigated = true; window.location.href = href; } };
+
+      const anim = iris.animate(
+        [{ transform: 'scale(0)' }, { transform: 'scale(' + scale + ')' }],
+        { duration: 560, easing: 'cubic-bezier(0.6, 0, 0.35, 1)', fill: 'forwards' }
+      );
+      anim.onfinish = go;
+      setTimeout(go, 650); // safety net if onfinish doesn't fire
+    });
+  });
+
+  /* ----- Reveal cover on pages reached via the wipe ----- */
+  const cover = document.getElementById('page-cover');
+  if (cover) {
+    if (document.documentElement.classList.contains('dive-enter')) {
+      /* CSS animation fades it out; just remove the node afterwards */
+      cover.addEventListener('animationend', () => cover.remove());
+      setTimeout(() => { if (cover.parentNode) cover.remove(); }, 1300);
+    } else {
+      cover.remove();
+    }
+  }
+}
+
+/* ==========================================================================
+   BOOT
+   ========================================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+  initGlobal();
+  initPage();
 });

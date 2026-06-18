@@ -8,8 +8,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/epos-website/style.css"><link rel="icon" href="/epos-website/assets/img/logo.png" type="image/png">
+  <style>
+    #page-cover{display:none}
+    html.dive-enter #page-cover{display:block;position:fixed;inset:0;background:#1E1636;z-index:9999;pointer-events:none;animation:coverReveal .6s ease .08s forwards}
+    @keyframes coverReveal{from{opacity:1}to{opacity:0}}
+    @media (prefers-reduced-motion:reduce){html.dive-enter #page-cover{animation-duration:.01s}}
+  </style>
+  <script>try{if(sessionStorage.getItem('portalDive')==='1'){document.documentElement.className+=' dive-enter';sessionStorage.removeItem('portalDive');}}catch(e){}</script>
 </head>
 <body>
+  <div id="page-cover"></div>
   <header class="site-header" id="site-header"><div class="header-container"><a href="/epos-website/" class="site-logo"><img src="/epos-website/assets/img/logo-uden-tekst.png" alt="Efterskolen Epos" height="44"><img src="/epos-website/assets/img/logo-kun-tekst.png" alt="Efterskolen Epos" height="44" class="site-name-img"></a><div class="header-right"><a href="/epos-website/bliv-elev/" class="btn-bliv-elev">Bliv elev</a><button class="menu-toggle" aria-expanded="false" aria-controls="fullscreen-menu" id="menu-open">MENU <span class="hamburger"></span></button></div></div></header>
   <div class="menu-overlay" id="fullscreen-menu" aria-hidden="true" role="dialog" aria-label="Navigation">
     <div class="menu-overlay-header"><a href="/epos-website/" class="menu-overlay-logo"><img src="/epos-website/assets/img/logo-uden-tekst.png" alt=""><img src="/epos-website/assets/img/logo-kun-tekst.png" alt="Efterskolen Epos" height="36"></a><button class="menu-close" id="menu-close" aria-label="Luk menu">✕</button></div>
@@ -22,7 +30,7 @@
     </div>
   </div>
   <main id="main-content">
-    <div class="profile-hero"><div class="profile-hero-img img-placeholder" role="img" aria-label="Billede: elever i kostume og rollespil — pladsholder til kommende foto"></div><div class="profile-hero-content"><span class="page-hero-eyebrow">Elevprofiler</span><h1>Taktikeren</h1><p>Lær gennem spil, strategi og simulationer.</p></div></div>
+    <div class="profile-hero"><img src="/epos-website/assets/img/elevprofiler/taktikeren.jpg" alt="Taktikeren ved spillebrættet" class="profile-hero-img"><div class="profile-hero-content"><span class="page-hero-eyebrow">Elevprofiler</span><h1>Taktikeren</h1><p>Lær gennem spil, strategi og simulationer.</p></div></div>
     <section class="section-lg"><div class="container"><div class="profile-detail">
       <div class="profile-detail-sidebar reveal">
         <a href="/epos-website/elevprofiler/" class="profile-detail-back">Alle elevprofiler</a>

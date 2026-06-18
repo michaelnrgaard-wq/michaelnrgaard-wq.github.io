@@ -14,8 +14,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/epos-website/style.css">
   <link rel="icon" href="/epos-website/assets/img/logo.png" type="image/png">
+  <style>
+    #page-cover{display:none}
+    html.dive-enter #page-cover{display:block;position:fixed;inset:0;background:#1E1636;z-index:9999;pointer-events:none;animation:coverReveal .6s ease .08s forwards}
+    @keyframes coverReveal{from{opacity:1}to{opacity:0}}
+    @media (prefers-reduced-motion:reduce){html.dive-enter #page-cover{animation-duration:.01s}}
+  </style>
+  <script>try{if(sessionStorage.getItem('portalDive')==='1'){document.documentElement.className+=' dive-enter';sessionStorage.removeItem('portalDive');}}catch(e){}</script>
 </head>
 <body>
+  <div id="page-cover"></div>
   <header class="site-header" id="site-header">
     <div class="header-container">
       <a href="/epos-website/" class="site-logo"><img src="/epos-website/assets/img/logo-uden-tekst.png" alt="Efterskolen Epos" height="44"><img src="/epos-website/assets/img/logo-kun-tekst.png" alt="Efterskolen Epos" height="44" class="site-name-img"></a>
@@ -49,7 +57,7 @@
 
   <main id="main-content">
     <div class="profile-hero">
-      <div class="profile-hero-img img-placeholder" role="img" aria-label="Pladsholder til hero-billede — sæt rigtigt foto ind her"></div>
+      <img src="/epos-website/assets/img/elevprofiler/rollespilleren.jpg" alt="Rollespilleren i aktion" class="profile-hero-img">
       <div class="profile-hero-content">
         <span class="page-hero-eyebrow">Elevprofiler</span>
       <h1>Rollespilleren</h1>
