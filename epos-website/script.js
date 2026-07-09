@@ -17,50 +17,88 @@
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+/* TODO: indsæt endpoint (Formspree/Brevo/mail-script). Så længe den er tom,
+   viser formularerne en ærlig "ikke aktiv endnu"-besked i stedet for at sende. */
+const FORM_ENDPOINT = "";
+
+const FORM_INACTIVE_MSG = 'Formularen er ikke aktiv endnu — skriv til os på kontor@epos-efterskole.dk.';
+const FORM_ERROR_MSG    = 'Noget gik galt under afsendelsen — prøv igen, eller skriv til kontor@epos-efterskole.dk.';
+
+function showFormMessage(form, text) {
+  let msg = form.querySelector('.form-msg');
+  if (!msg) {
+    msg = document.createElement('p');
+    msg.className = 'form-msg';
+    msg.style.cssText = 'color:var(--color-accent);font-weight:600;margin-top:.75rem;';
+    msg.setAttribute('role', 'status');
+    form.appendChild(msg);
+  }
+  msg.textContent = text;
+}
+
 /* Render any consent-gated videos (shared by the cookie buttons and initPage) */
+
+/* Only YouTube embeds are allowed; youtube-nocookie.com foretrækkes af privatlivshensyn */
+function safeVideoUrl(src) {
+  if (!src) return null;
+  try {
+    const url = new URL(src, window.location.origin);
+    if (url.protocol !== 'https:') return null;
+    if (url.hostname === 'www.youtube-nocookie.com') return url.href;
+    if (url.hostname === 'www.youtube.com') {
+      /* Foretræk nocookie-varianten af samme embed */
+      url.hostname = 'www.youtube-nocookie.com';
+      return url.href;
+    }
+    return null;
+  } catch (e) {
+    return null;
+  }
+}
+
 function loadConsentedContent() {
   document.querySelectorAll('[data-consent="video"]').forEach(el => {
-    const src = el.dataset.src;
-    el.innerHTML = src
-      ? `<iframe src="${src}" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="position:absolute;inset:0;width:100%;height:100%;"></iframe>`
-      : `<div style="background:var(--color-primary);color:#fff;width:100%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-lg);">Video klar til indlejring</div>`;
+    const src = safeVideoUrl(el.dataset.src);
+    el.textContent = '';
+    if (src) {
+      const iframe = document.createElement('iframe');
+      iframe.setAttribute('src', src);
+      iframe.setAttribute('frameborder', '0');
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+      iframe.setAttribute('loading', 'lazy');
+      iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+      iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;';
+      el.appendChild(iframe);
+    } else {
+      const placeholder = document.createElement('div');
+      placeholder.style.cssText = 'background:var(--color-primary);color:#fff;width:100%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-lg);';
+      placeholder.textContent = 'Video klar til indlejring';
+      el.appendChild(placeholder);
+    }
   });
 }
 
 /* ==========================================================================
    SMOOTH SCROLL (Lenis) + PARALLAX DEPTH
    ========================================================================== */
+/* Native scrolling — no Lenis. `lenis` stays null so all `if (lenis)` guards
+   simply fall through to the browser's default scroll behaviour. */
 let lenis = null;
 
 function initSmoothScroll() {
-  if (prefersReducedMotion || window.__lenisStarted) return;
-  window.__lenisStarted = true;
-  const s = document.createElement('script');
-  s.src = '/epos-website/assets/js/lenis.min.js';
-  s.onload = () => {
-    if (!window.Lenis) return;
-    lenis = new window.Lenis({
-      duration: 1.05,
-      easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      touchMultiplier: 1.5
-    });
-    window.__lenis = lenis;
-    const raf = time => { lenis.raf(time); requestAnimationFrame(raf); };
-    requestAnimationFrame(raf);
-
-    /* Smooth in-page anchor links */
-    document.addEventListener('click', e => {
-      const a = e.target.closest('a[href^="#"]');
-      if (!a) return;
-      const sel = a.getAttribute('href');
-      if (sel.length < 2) return;
-      const target = document.querySelector(sel);
-      if (target) { e.preventDefault(); lenis.scrollTo(target, { offset: -90 }); }
-    });
-  };
-  s.onerror = () => { /* fall back silently to native scroll */ };
-  document.head.appendChild(s);
+  /* In-page anchor links: native jump with an offset for the sticky header. */
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const sel = a.getAttribute('href');
+    if (sel.length < 2) return;
+    const target = document.querySelector(sel);
+    if (!target) return;
+    e.preventDefault();
+    const top = target.getBoundingClientRect().top + window.scrollY - 90;
+    window.scrollTo({ top, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+  });
 }
 
 let parallaxItems = [];
@@ -146,7 +184,22 @@ function initGlobal() {
     menuClose.addEventListener('click', closeMenu);
     scrim.addEventListener('click', closeMenu);
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && menuOverlay.classList.contains('is-open')) closeMenu();
+      if (!menuOverlay.classList.contains('is-open')) return;
+      if (e.key === 'Escape') { closeMenu(); return; }
+
+      /* Focus-trap: hold Tab/Shift+Tab inden for den åbne menu */
+      if (e.key !== 'Tab') return;
+      const focusables = [...menuOverlay.querySelectorAll('a[href], button:not([disabled])')]
+        .filter(el => !el.closest('[aria-hidden="true"]'));
+      if (!focusables.length) return;
+      const first = focusables[0];
+      const last  = focusables[focusables.length - 1];
+      const active = document.activeElement;
+      if (e.shiftKey) {
+        if (active === first || !menuOverlay.contains(active)) { e.preventDefault(); last.focus(); }
+      } else {
+        if (active === last || !menuOverlay.contains(active)) { e.preventDefault(); first.focus(); }
+      }
     });
 
     document.querySelectorAll('.submenu-back').forEach(btn => {
@@ -218,6 +271,16 @@ function initGlobal() {
       localStorage.setItem('cookieConsent', 'rejected');
       cookieBanner.classList.remove('is-visible');
     });
+
+    /* "Cookieindstillinger" i footeren: træk samtykket tilbage og vis banneret igen */
+    document.querySelectorAll('[data-cookie-settings]').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        localStorage.removeItem('cookieConsent');
+        cookieBanner.classList.add('is-visible');
+        cookieBanner.setAttribute('aria-hidden', 'false');
+      });
+    });
   }
 
   /* Smooth scroll + parallax depth */
@@ -264,33 +327,79 @@ function initPage() {
     });
   });
 
-  /* ----- Newsletter form (client-side validation only) ----- */
+  /* ----- Newsletter form ----- */
   document.querySelectorAll('.newsletter-form').forEach(form => {
     if (form.dataset.bound) return;
     form.dataset.bound = '1';
-    form.addEventListener('submit', e => {
+    form.addEventListener('submit', async e => {
       e.preventDefault();
       const input = form.querySelector('input[type="email"]');
-      if (input && input.value) {
-        input.value = '';
-        const msg = document.createElement('p');
-        msg.style.cssText = 'color:var(--color-accent);font-weight:600;margin-top:.75rem;';
-        msg.textContent = 'Tak! Du er nu tilmeldt vores nyhedsbrev.';
-        form.appendChild(msg);
-        setTimeout(() => msg.remove(), 5000);
+      if (!input || !input.value) return;
+
+      if (!FORM_ENDPOINT) {
+        showFormMessage(form, FORM_INACTIVE_MSG);
+        return;
+      }
+
+      const btn = form.querySelector('button[type="submit"]');
+      if (btn) btn.disabled = true;
+      try {
+        const res = await fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          input.value = '';
+          showFormMessage(form, 'Tak! Du er nu tilmeldt vores nyhedsbrev.');
+        } else {
+          showFormMessage(form, FORM_ERROR_MSG);
+        }
+      } catch (err) {
+        showFormMessage(form, FORM_ERROR_MSG);
+      } finally {
+        if (btn) btn.disabled = false;
       }
     });
   });
 
-  /* ----- Contact form (client-side only, action = placeholder) ----- */
+  /* ----- Contact form ----- */
   const contactForm = document.getElementById('contact-form');
   if (contactForm && !contactForm.dataset.bound) {
     contactForm.dataset.bound = '1';
-    contactForm.addEventListener('submit', e => {
+    contactForm.addEventListener('submit', async e => {
       e.preventDefault();
+
+      if (!FORM_ENDPOINT) {
+        showFormMessage(contactForm, FORM_INACTIVE_MSG);
+        return;
+      }
+
+      if (!contactForm.checkValidity()) { contactForm.reportValidity(); return; }
+
       const btn = contactForm.querySelector('button[type="submit"]');
-      btn.textContent = 'Besked sendt ✓';
+      const originalText = btn.textContent;
       btn.disabled = true;
+      btn.textContent = 'Sender…';
+      try {
+        const res = await fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          body: new FormData(contactForm),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          contactForm.reset();
+          btn.textContent = 'Besked sendt ✓';
+        } else {
+          btn.disabled = false;
+          btn.textContent = originalText;
+          showFormMessage(contactForm, FORM_ERROR_MSG);
+        }
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = originalText;
+        showFormMessage(contactForm, FORM_ERROR_MSG);
+      }
     });
   }
 

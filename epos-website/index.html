@@ -3,29 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-src https://www.youtube-nocookie.com https://www.youtube.com; base-uri 'self'; form-action 'self'; object-src 'none'; frame-ancestors 'self'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Efterskolen Epos — Fortællinger for livet</title>
   <meta name="description" content="Efterskolen Epos er en efterskole på Als, hvor rollespil, fortælling og legende læring er en del af den daglige undervisning.">
   <meta property="og:title" content="Efterskolen Epos — Fortællinger for livet">
   <meta property="og:description" content="Efterskolen Epos er en efterskole på Als, hvor rollespil, fortælling og legende læring er en del af den daglige undervisning.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://efterskolen-epos.dk/">
-  <meta property="og:image" content="https://efterskolen-epos.dk/assets/img/og-image.jpg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/epos-website/style.css">
-  <link rel="icon" href="/epos-website/assets/img/logo.png" type="image/png">
+  <meta property="og:image" content="https://efterskolen-epos.dk/assets/img/epos-front.jpg">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="icon" href="/assets/img/logo.png" type="image/png">
 </head>
 <body>
 
   <header class="site-header" id="site-header">
     <div class="header-container">
-      <a href="/epos-website/" class="site-logo">
-        <img src="/epos-website/assets/img/logo-uden-tekst.png" alt="Efterskolen Epos" height="44"><img src="/epos-website/assets/img/logo-kun-tekst.png" alt="Efterskolen Epos" height="44" class="site-name-img">
+      <a href="/" class="site-logo">
+        <img src="/assets/img/logo-uden-tekst.png" alt="Efterskolen Epos" height="44"><img src="/assets/img/logo-kun-tekst.png" alt="Efterskolen Epos" height="44" class="site-name-img">
         
       </a>
       <div class="header-right">
-        <a href="/epos-website/bliv-elev/" class="btn-bliv-elev">Bliv elev</a>
+        <a href="/bliv-elev/" class="btn-bliv-elev">Bliv elev</a>
         <button class="menu-toggle" aria-expanded="false" aria-controls="fullscreen-menu" id="menu-open">
           MENU <span class="hamburger"></span>
         </button>
@@ -35,54 +34,54 @@
 
   <div class="menu-overlay" id="fullscreen-menu" aria-hidden="true" role="dialog" aria-label="Navigation">
     <div class="menu-overlay-header">
-      <a href="/epos-website/" class="menu-overlay-logo"><img src="/epos-website/assets/img/logo-uden-tekst.png" alt=""><img src="/epos-website/assets/img/logo-kun-tekst.png" alt="Efterskolen Epos" height="36"></a>
+      <a href="/" class="menu-overlay-logo"><img src="/assets/img/logo-uden-tekst.png" alt=""><img src="/assets/img/logo-kun-tekst.png" alt="Efterskolen Epos" height="36"></a>
       <button class="menu-close" id="menu-close" aria-label="Luk menu">✕</button>
     </div>
     <div class="menu-content-wrapper">
       <nav class="menu-main-col" aria-label="Primær navigation">
         <ul>
-          <li><a href="/epos-website/" class="menu-link">Forside</a></li>
+          <li><a href="/" class="menu-link">Forside</a></li>
           <li><button class="menu-link has-submenu" aria-expanded="false" aria-controls="submenu-elev">Elevprofiler <span class="arrow">›</span></button></li>
           <li><button class="menu-link has-submenu" aria-expanded="false" aria-controls="submenu-undervisning">Undervisning <span class="arrow">›</span></button></li>
           <li><button class="menu-link has-submenu" aria-expanded="false" aria-controls="submenu-livet">Livet på Epos <span class="arrow">›</span></button></li>
           <li><button class="menu-link has-submenu" aria-expanded="false" aria-controls="submenu-kurser">Kurser og events <span class="arrow">›</span></button></li>
         </ul>
         <div class="menu-footer-links">
-          <a href="/epos-website/nyheder/">Nyheder</a>
-          <a href="/epos-website/faq/">FAQ</a>
-          <a href="/epos-website/kontakt/">Kontakt os</a>
+          <a href="/nyheder/">Nyheder</a>
+          <a href="/faq/">FAQ</a>
+          <a href="/kontakt/">Kontakt os</a>
         </div>
       </nav>
       <nav class="menu-sub-col" id="submenu-elev" aria-hidden="true">
         <p class="submenu-title">Elevprofiler</p>
         <ul>
-          <li><a href="/epos-website/elevprofiler/rollespilleren/" class="menu-link submenu-link">Rollespilleren</a></li>
-          <li><a href="/epos-website/elevprofiler/cosplayeren/" class="menu-link submenu-link">Cosplayeren</a></li>
-          <li><a href="/epos-website/elevprofiler/skuespilleren/" class="menu-link submenu-link">Skuespilleren</a></li>
-          <li><a href="/epos-website/elevprofiler/taktikeren/" class="menu-link submenu-link">Taktikeren</a></li>
-          <li><a href="/epos-website/elevprofiler/fortaelleren/" class="menu-link submenu-link">Fortælleren</a></li>
+          <li><a href="/elevprofiler/rollespilleren/" class="menu-link submenu-link">Rollespilleren</a></li>
+          <li><a href="/elevprofiler/cosplayeren/" class="menu-link submenu-link">Cosplayeren</a></li>
+          <li><a href="/elevprofiler/skuespilleren/" class="menu-link submenu-link">Skuespilleren</a></li>
+          <li><a href="/elevprofiler/taktikeren/" class="menu-link submenu-link">Taktikeren</a></li>
+          <li><a href="/elevprofiler/fortaelleren/" class="menu-link submenu-link">Fortælleren</a></li>
         </ul>
       </nav>
       <nav class="menu-sub-col" id="submenu-undervisning" aria-hidden="true">
         <p class="submenu-title">Undervisning</p>
         <ul>
-          <li><a href="/epos-website/undervisning/paedagogik/" class="menu-link submenu-link">Pædagogik</a></li>
-          <li><a href="/epos-website/undervisning/legende-laering/" class="menu-link submenu-link">Legende læring</a></li>
+          <li><a href="/undervisning/paedagogik/" class="menu-link submenu-link">Pædagogik</a></li>
+          <li><a href="/undervisning/legende-laering/" class="menu-link submenu-link">Legende læring</a></li>
         </ul>
       </nav>
       <nav class="menu-sub-col" id="submenu-livet" aria-hidden="true">
         <p class="submenu-title">Livet på Epos</p>
         <ul>
-          <li><a href="/epos-website/livet-paa-epos/om-epos/" class="menu-link submenu-link">Om Epos</a></li>
-          <li><a href="/epos-website/livet-paa-epos/historie/" class="menu-link submenu-link">Epos' historie</a></li>
-          <li><a href="/epos-website/livet-paa-epos/medarbejdere/" class="menu-link submenu-link">Medarbejdere</a></li>
+          <li><a href="/livet-paa-epos/om-epos/" class="menu-link submenu-link">Om Epos</a></li>
+          <li><a href="/livet-paa-epos/historie/" class="menu-link submenu-link">Epos' historie</a></li>
+          <li><a href="/livet-paa-epos/medarbejdere/" class="menu-link submenu-link">Medarbejdere</a></li>
         </ul>
       </nav>
       <nav class="menu-sub-col" id="submenu-kurser" aria-hidden="true">
         <p class="submenu-title">Kurser og events</p>
         <ul>
-          <li><a href="/epos-website/kurser-og-events/nybyggerne/" class="menu-link submenu-link">Nybyggerne Liverollespil</a></li>
-          <li><a href="/epos-website/kurser-og-events/epos-uge/" class="menu-link submenu-link">Epos-uge</a></li>
+          <li><a href="/kurser-og-events/nybyggerne/" class="menu-link submenu-link">Nybyggerne Liverollespil</a></li>
+          <li><a href="/kurser-og-events/epos-uge/" class="menu-link submenu-link">Epos-uge</a></li>
         </ul>
       </nav>
     </div>
@@ -100,8 +99,8 @@
         <h1>Her bliver du hovedpersonen i din egen <span class="ink">fortælling</span></h1>
         <p>Vi er en efterskole, hvor rollespil, drama og fortælling ikke er noget, vi gør i fritiden — det er en del af selve undervisningen.</p>
         <div class="btn-group">
-          <a href="/epos-website/elevprofiler/" class="btn btn-primary">Find din rolle</a>
-          <a href="/epos-website/kurser-og-events/" class="btn btn-outline-light">Se kommende camps</a>
+          <a href="/elevprofiler/" class="btn btn-primary">Find din rolle</a>
+          <a href="/kurser-og-events/" class="btn btn-outline-light">Se kommende camps</a>
         </div>
       </div>
       <div class="hero-visual reveal reveal-delay-2" data-parallax="-0.05">
@@ -127,8 +126,8 @@
           <p class="section-intro">Måske er du flere på samme tid — og det er helt okay.</p>
         </div>
         <div class="profile-cards-grid">
-          <a href="/epos-website/elevprofiler/rollespilleren/" class="profile-card reveal reveal-delay-1" data-profile-link>
-            <img src="/epos-website/assets/img/elevprofiler/rollespilleren.jpg" alt="Rollespilleren" class="profile-card-img">
+          <a href="/elevprofiler/rollespilleren/" class="profile-card reveal reveal-delay-1" data-profile-link>
+            <img src="/assets/img/elevprofiler/rollespilleren.jpg" alt="Rollespilleren" class="profile-card-img">
             <div class="profile-card-overlay"></div>
             <div class="profile-card-body">
               <h3>Rollespilleren</h3>
@@ -136,8 +135,8 @@
               <span class="profile-card-arrow">Læs mere</span>
             </div>
           </a>
-          <a href="/epos-website/elevprofiler/cosplayeren/" class="profile-card reveal reveal-delay-2" data-profile-link>
-            <img src="/epos-website/assets/img/elevprofiler/cosplayeren.jpg" alt="Cosplayeren" class="profile-card-img">
+          <a href="/elevprofiler/cosplayeren/" class="profile-card reveal reveal-delay-2" data-profile-link>
+            <img src="/assets/img/elevprofiler/cosplayeren.jpg" alt="Cosplayeren" class="profile-card-img">
             <div class="profile-card-overlay"></div>
             <div class="profile-card-body">
               <h3>Cosplayeren</h3>
@@ -145,8 +144,8 @@
               <span class="profile-card-arrow">Læs mere</span>
             </div>
           </a>
-          <a href="/epos-website/elevprofiler/skuespilleren/" class="profile-card reveal reveal-delay-3" data-profile-link>
-            <img src="/epos-website/assets/img/elevprofiler/skuespilleren.jpg" alt="Skuespilleren" class="profile-card-img">
+          <a href="/elevprofiler/skuespilleren/" class="profile-card reveal reveal-delay-3" data-profile-link>
+            <img src="/assets/img/elevprofiler/skuespilleren.jpg" alt="Skuespilleren" class="profile-card-img">
             <div class="profile-card-overlay"></div>
             <div class="profile-card-body">
               <h3>Skuespilleren</h3>
@@ -154,8 +153,8 @@
               <span class="profile-card-arrow">Læs mere</span>
             </div>
           </a>
-          <a href="/epos-website/elevprofiler/taktikeren/" class="profile-card reveal reveal-delay-4" data-profile-link>
-            <img src="/epos-website/assets/img/elevprofiler/taktikeren.jpg" alt="Taktikeren" class="profile-card-img">
+          <a href="/elevprofiler/taktikeren/" class="profile-card reveal reveal-delay-4" data-profile-link>
+            <img src="/assets/img/elevprofiler/taktikeren.jpg" alt="Taktikeren" class="profile-card-img">
             <div class="profile-card-overlay"></div>
             <div class="profile-card-body">
               <h3>Taktikeren</h3>
@@ -163,8 +162,8 @@
               <span class="profile-card-arrow">Læs mere</span>
             </div>
           </a>
-          <a href="/epos-website/elevprofiler/fortaelleren/" class="profile-card reveal" data-profile-link>
-            <img src="/epos-website/assets/img/elevprofiler/fortaelleren.png" alt="Fortælleren" class="profile-card-img">
+          <a href="/elevprofiler/fortaelleren/" class="profile-card reveal" data-profile-link>
+            <img src="/assets/img/elevprofiler/fortaelleren.png" alt="Fortælleren" class="profile-card-img">
             <div class="profile-card-overlay"></div>
             <div class="profile-card-body">
               <h3>Fortælleren</h3>
@@ -186,7 +185,7 @@
             <div class="ornament left"></div>
             <p>Epos ligger på Als ved Fynshav, i de tidligere bygninger på Danebod. Her er rollespil, drama og fortælling ikke noget, vi gør i fritiden — det er en del af selve undervisningen, side om side med fagundervisning og de samme afgangsprøver som folkeskolen.</p>
             <p>Vi tror på, at dine handlinger — i og uden for spillet — kan gøre en forskel for andre og for dig selv.</p>
-            <a href="/epos-website/livet-paa-epos/om-epos/" class="btn btn-outline" style="margin-top:1rem;">Læs mere om Epos</a>
+            <a href="/livet-paa-epos/om-epos/" class="btn btn-outline" style="margin-top:1rem;">Læs mere om Epos</a>
           </div>
           <div class="reveal reveal-delay-2">
             <div class="img-placeholder img-placeholder-4-3" role="img" aria-label="Epos' historiske bygninger på Als set udefra">
@@ -212,7 +211,7 @@
             <div class="ornament left"></div>
             <p>Vi kalder det <em>legende læring</em> — vi bruger leg og spil som en aktiv del af undervisningen, fordi legen trækker på en motivation, ingen lærebog kan give dig.</p>
             <p>Når du spiller en rolle, er det aldrig dig, der fejler — du har et alibi til at prøve ting af og argumentere for en holdning. Og netop dér sker en stor del af læringen.</p>
-            <a href="/epos-website/undervisning/legende-laering/" class="btn btn-primary" style="margin-top:1rem;">Læs om legende læring</a>
+            <a href="/undervisning/legende-laering/" class="btn btn-primary" style="margin-top:1rem;">Læs om legende læring</a>
           </div>
         </div>
       </div>
@@ -227,7 +226,7 @@
           <p class="section-intro">Oplev vores undervisning på egen hånd — inden du beslutter dig.</p>
         </div>
         <div class="cards-grid-2">
-          <a href="/epos-website/kurser-og-events/nybyggerne/" class="card reveal reveal-delay-1">
+          <a href="/kurser-og-events/nybyggerne/" class="card reveal reveal-delay-1">
             <div class="card-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             </div>
@@ -235,7 +234,7 @@
             <p>Fem huse. Én ø. Hvem vinder magten? Et stort liverollespil om demokrati, familiedrama og mødet med det ukendte — for alle fra 5. klasse og op.</p>
             <span class="card-arrow">Læs mere og tilmeld</span>
           </a>
-          <a href="/epos-website/kurser-og-events/epos-uge/" class="card reveal reveal-delay-2">
+          <a href="/kurser-og-events/epos-uge/" class="card reveal reveal-delay-2">
             <div class="card-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
             </div>
@@ -270,7 +269,7 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-brand">
-          <img src="/epos-website/assets/img/logo.png" alt="Efterskolen Epos">
+          <img src="/assets/img/logo.png" alt="Efterskolen Epos">
           <p class="footer-tagline">Fortællinger for livet</p>
         </div>
         <div class="footer-col">
@@ -282,14 +281,14 @@
         </div>
         <div class="footer-col">
           <h4>Følg os</h4>
-          <a href="[INSTAGRAM-URL]" class="social-link" aria-label="Efterskolen Epos på Instagram">
+          <a href="https://www.instagram.com/efterskolenepos/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Efterskolen Epos på Instagram">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
           </a>
         </div>
       </div>
       <div class="footer-bottom">
         <p>&copy; 2026 Efterskolen Epos</p>
-        <p>Færgevej 5, Fynshav, 6440 Augustenborg</p>
+        <p>Færgevej 5, Fynshav, 6440 Augustenborg · <a href="#" data-cookie-settings>Cookieindstillinger</a></p>
       </div>
     </div>
   </footer>
@@ -297,8 +296,8 @@
   <!-- ⚠️ OPDATER TEKST OG LINK INDEN HVERT SEMESTER -->
   <aside class="floating-cta" id="floating-cta" aria-hidden="true">
     <button class="close-cta" id="close-cta" aria-label="Luk">✕</button>
-    <a href="/epos-website/kurser-og-events/epos-uge/" class="cta-content">
-      <div class="cta-img" aria-hidden="true">🏰</div>
+    <a href="/kurser-og-events/epos-uge/" class="cta-content">
+      <div class="cta-img" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 20v-9H2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2Z"/><path d="M18 11V4H6v7"/><path d="M15 22v-4a3 3 0 0 0-3-3v0a3 3 0 0 0-3 3v4"/><path d="M22 11V9"/><path d="M2 11V9"/><path d="M6 4V2"/><path d="M18 4V2"/><path d="M10 4V2"/><path d="M14 4V2"/></svg></div>
       <span class="cta-text">Tilmeld Epos-uge<br><small style="font-weight:400;opacity:.8;">Hvert efterår og vinter</small></span>
     </a>
   </aside>
@@ -313,6 +312,6 @@
     </div>
   </aside>
 
-  <script src="/epos-website/script.js"></script>
+  <script src="/script.js"></script>
 </body>
 </html>
