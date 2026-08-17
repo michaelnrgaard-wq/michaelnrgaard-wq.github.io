@@ -118,8 +118,49 @@
 
     .ns-feedback { min-height: 1.4em; margin-top: 1.5rem; font-family: var(--font-heading); font-size: 1.05rem; color: #F4EFFC; }
 
+    .ns-mode-options { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 420px; margin: 0 auto; }
+    @media (max-width: 480px) { .ns-mode-options { grid-template-columns: 1fr; } }
+    .ns-mode-option {
+      display: block;
+      width: 100%;
+      padding: 1.5rem 1.25rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text);
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      cursor: pointer;
+      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+    }
+    .ns-mode-option:hover, .ns-mode-option:focus-visible {
+      border-color: var(--color-accent);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .ns-namecaption {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      color: #F4EFFC;
+      margin: -.75rem 0 1.5rem;
+    }
+
+    .ns-switch-mode {
+      display: block;
+      margin: -1rem auto 1.5rem;
+      background: none;
+      border: none;
+      color: var(--color-muted);
+      font-family: var(--font-body);
+      font-size: .85rem;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .ns-switch-mode:hover, .ns-switch-mode:focus-visible { color: var(--color-accent); }
+
     @media (prefers-reduced-motion: reduce) {
-      .ns-option { transition: none; }
+      .ns-option, .ns-mode-option { transition: none; }
     }
   </style>
 </head>
@@ -139,14 +180,24 @@
       <p class="ns-error" id="ns-passcode-error" role="alert"></p>
     </section>
 
+    <section class="ns-screen" data-screen="mode" id="ns-mode-screen" hidden>
+      <h1 class="sr-only">Vælg spil</h1>
+      <div class="ns-mode-options">
+        <button type="button" class="ns-mode-option" id="ns-mode-navne">Navne</button>
+        <button type="button" class="ns-mode-option" id="ns-mode-huse">Huse</button>
+      </div>
+    </section>
+
     <section class="ns-screen" data-screen="game" id="ns-game-screen" hidden>
       <div class="ns-score" aria-live="polite">
         <span class="ns-score-correct">Rigtige: <span id="ns-score-correct">0</span></span>
         <span class="ns-score-wrong">Forkerte: <span id="ns-score-wrong">0</span></span>
       </div>
+      <button type="button" class="ns-switch-mode" id="ns-switch-mode">Skift spil</button>
       <div class="ns-photo-wrap">
         <img id="ns-photo" src="" alt="Foto af en elev fra gruppen">
       </div>
+      <p class="ns-namecaption" id="ns-namecaption" hidden></p>
       <div class="ns-options" id="ns-options"></div>
       <p class="ns-feedback" id="ns-feedback" aria-live="polite"></p>
     </section>
