@@ -1,0 +1,286 @@
+[
+  {
+    "name": "Albert Frisk Fredslund",
+    "image": "assets/elever/albert-frisk-fredslund.jpg"
+  },
+  {
+    "name": "Alexander Eskesen",
+    "image": "assets/elever/alexander-eskesen.jpg"
+  },
+  {
+    "name": "Anton Dupont Ærbo",
+    "image": "assets/elever/anton-dupont-aerbo.jpg"
+  },
+  {
+    "name": "Aske Frost Rønne",
+    "image": "assets/elever/aske-frost-roenne.jpg"
+  },
+  {
+    "name": "Benjamin Bødker Frandsen",
+    "image": "assets/elever/benjamin-boedker-frandsen.jpg"
+  },
+  {
+    "name": "Cecilia Astrup Skov Arendtsen",
+    "image": "assets/elever/cecilia-astrup-skov-arendtsen.jpg"
+  },
+  {
+    "name": "Christian Frederiksen",
+    "image": "assets/elever/christian-frederiksen.jpg"
+  },
+  {
+    "name": "Dimitri Vang",
+    "image": "assets/elever/dimitri-vang.jpg"
+  },
+  {
+    "name": "Elisa Byriel Christensen",
+    "image": "assets/elever/elisa-byriel-christensen.jpg"
+  },
+  {
+    "name": "Erik Escherich Dyrby",
+    "image": "assets/elever/erik-escherich-dyrby.jpg"
+  },
+  {
+    "name": "Hannah Boufercha Lekve",
+    "image": "assets/elever/hannah-boufercha-lekve.jpg"
+  },
+  {
+    "name": "Ida Masinska Valderslef",
+    "image": "assets/elever/ida-masinska-valderslef.jpg"
+  },
+  {
+    "name": "Jacob Schertiger Riis",
+    "image": "assets/elever/jacob-schertiger-riis.jpg"
+  },
+  {
+    "name": "Joanna Lanng",
+    "image": "assets/elever/joanna-lanng.jpg"
+  },
+  {
+    "name": "Kasper Larsen",
+    "image": "assets/elever/kasper-larsen.jpg"
+  },
+  {
+    "name": "Knud Sommer Bjerre",
+    "image": "assets/elever/knud-sommer-bjerre.jpg"
+  },
+  {
+    "name": "Lea Fossat",
+    "image": "assets/elever/lea-fossat.jpg"
+  },
+  {
+    "name": "Lina Krag Schønberg",
+    "image": "assets/elever/lina-krag-schoenberg.jpg"
+  },
+  {
+    "name": "Liv Printz",
+    "image": "assets/elever/liv-printz.jpg"
+  },
+  {
+    "name": "Liv Aaskov",
+    "image": "assets/elever/liv-aaskov.jpg"
+  },
+  {
+    "name": "Liv Bjørnskov Garde",
+    "image": "assets/elever/liv-bjoernskov-garde.jpg"
+  },
+  {
+    "name": "Lærke Katalina Sliben-Bjørnsen",
+    "image": "assets/elever/laerke-katalina-sliben-bjoernsen.jpg"
+  },
+  {
+    "name": "Mads Ørskov Nielsen",
+    "image": "assets/elever/mads-oerskov-nielsen.jpg"
+  },
+  {
+    "name": "Magnus Schou",
+    "image": "assets/elever/magnus-schou.jpg"
+  },
+  {
+    "name": "Malthe Sten Rewees Pedersen",
+    "image": "assets/elever/malthe-sten-rewees-pedersen.jpg"
+  },
+  {
+    "name": "Marie Markvardsen",
+    "image": "assets/elever/marie-markvardsen.jpg"
+  },
+  {
+    "name": "Max Pontoppidan Allerslev",
+    "image": "assets/elever/max-pontoppidan-allerslev.jpg"
+  },
+  {
+    "name": "Nora Poulsen Tolbod",
+    "image": "assets/elever/nora-poulsen-tolbod.jpg"
+  },
+  {
+    "name": "Oskar Bjørn Avernakke Nielsen",
+    "image": "assets/elever/oskar-bjoern-avernakke-nielsen.jpg"
+  },
+  {
+    "name": "Paulina Henzl",
+    "image": "assets/elever/paulina-henzl.jpg"
+  },
+  {
+    "name": "Rosa Trinderup",
+    "image": "assets/elever/rosa-trinderup.jpg"
+  },
+  {
+    "name": "Rune Kjeldahl Lassen",
+    "image": "assets/elever/rune-kjeldahl-lassen.jpg"
+  },
+  {
+    "name": "Røskva Augusta Eilenberg Olofsson",
+    "image": "assets/elever/roeskva-augusta-eilenberg-olofsson.jpg"
+  },
+  {
+    "name": "Sarah Hassing",
+    "image": "assets/elever/sarah-hassing.jpg"
+  },
+  {
+    "name": "Silke Klara Voss",
+    "image": "assets/elever/silke-klara-voss.jpg"
+  },
+  {
+    "name": "Siri Lykke Qvistgaard",
+    "image": "assets/elever/siri-lykke-qvistgaard.jpg"
+  },
+  {
+    "name": "Sofie Mathilde Rasmussen",
+    "image": "assets/elever/sofie-mathilde-rasmussen.jpg"
+  },
+  {
+    "name": "Sonja Sofie Skou",
+    "image": "assets/elever/sonja-sofie-skou.jpg"
+  },
+  {
+    "name": "Storm Grost Christiansen",
+    "image": "assets/elever/storm-grost-christiansen.jpg"
+  },
+  {
+    "name": "Thomas Juhl Oesten",
+    "image": "assets/elever/thomas-juhl-oesten.jpg"
+  },
+  {
+    "name": "Thomas Erik Plauborg",
+    "image": "assets/elever/thomas-erik-plauborg.jpg"
+  },
+  {
+    "name": "Tjalfe Kreinøe",
+    "image": "assets/elever/tjalfe-kreinoee.jpg"
+  },
+  {
+    "name": "Tobias Walther-Johansen",
+    "image": "assets/elever/tobias-walther-johansen.jpg"
+  },
+  {
+    "name": "Tristan Vesterholm T. Olsen",
+    "image": "assets/elever/tristan-vesterholm-t-olsen.jpg"
+  },
+  {
+    "name": "Valdemar Johansen",
+    "image": "assets/elever/valdemar-johansen.jpg"
+  },
+  {
+    "name": "Vega Lokdam Selmer",
+    "image": "assets/elever/vega-lokdam-selmer.jpg"
+  },
+  {
+    "name": "Victor Gybel",
+    "image": "assets/elever/victor-gybel.jpg"
+  },
+  {
+    "name": "Victor Sjøgren",
+    "image": "assets/elever/victor-sjoegren.jpg"
+  },
+  {
+    "name": "Vitalina Vasylenko",
+    "image": "assets/elever/vitalina-vasylenko.jpg"
+  },
+  {
+    "name": "Xander Panduro",
+    "image": "assets/elever/xander-panduro.jpg"
+  },
+  {
+    "name": "Alex Stråsø Kjær",
+    "image": "assets/elever/alex-straasoe-kjaer.jpg"
+  },
+  {
+    "name": "Isabella Bianca Inuuna Rasmussen",
+    "image": "assets/elever/isabella-bianca-inuuna-rasmussen.jpg"
+  },
+  {
+    "name": "Alex Ravn Rimhøj",
+    "image": "assets/elever/alex-ravn-rimhoej.jpg"
+  },
+  {
+    "name": "Axel Amonthep Dyrvig Vestov",
+    "image": "assets/elever/axel-amonthep-dyrvig-vestov.jpg"
+  },
+  {
+    "name": "Benedicte Dodensig",
+    "image": "assets/elever/benedicte-dodensig.jpg"
+  },
+  {
+    "name": "Bjørn Gundelach",
+    "image": "assets/elever/bjoern-gundelach.jpg"
+  },
+  {
+    "name": "Chaylee Bent",
+    "image": "assets/elever/chaylee-bent.jpg"
+  },
+  {
+    "name": "Elias Kjær Jensen",
+    "image": "assets/elever/elias-kjaer-jensen.jpg"
+  },
+  {
+    "name": "Hans Peter Mogensen",
+    "image": "assets/elever/hans-peter-mogensen.jpg"
+  },
+  {
+    "name": "Johannes Thøgersen",
+    "image": "assets/elever/johannes-thoegersen.jpg"
+  },
+  {
+    "name": "Jonathan Gosvig Høi",
+    "image": "assets/elever/jonathan-gosvig-hoei.jpg"
+  },
+  {
+    "name": "Larissa Hiemstra",
+    "image": "assets/elever/larissa-hiemstra.jpg"
+  },
+  {
+    "name": "Lena Qing Jepsen",
+    "image": "assets/elever/lena-qing-jepsen.jpg"
+  },
+  {
+    "name": "Lærke Bossen Villumsen",
+    "image": "assets/elever/laerke-bossen-villumsen.jpg"
+  },
+  {
+    "name": "Marta Lehner",
+    "image": "assets/elever/marta-lehner.jpg"
+  },
+  {
+    "name": "Nicolaj Wolff Tvede Rantzau",
+    "image": "assets/elever/nicolaj-wolff-tvede-rantzau.jpg"
+  },
+  {
+    "name": "Rasmus Schnoor Hansen",
+    "image": "assets/elever/rasmus-schnoor-hansen.jpg"
+  },
+  {
+    "name": "Ronja Skov",
+    "image": "assets/elever/ronja-skov.jpg"
+  },
+  {
+    "name": "Sixten Just Holm",
+    "image": "assets/elever/sixten-just-holm.jpg"
+  },
+  {
+    "name": "Sofia Thulsted Bargholz",
+    "image": "assets/elever/sofia-thulsted-bargholz.jpg"
+  },
+  {
+    "name": "Sofia Johanne M. Jul-Hansen",
+    "image": "assets/elever/sofia-johanne-m-jul-hansen.jpg"
+  }
+]

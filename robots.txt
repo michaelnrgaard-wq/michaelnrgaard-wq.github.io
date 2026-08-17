@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /navneleg/
 
 Sitemap: https://michaelguldberg.dk/sitemap.xml

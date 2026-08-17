@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; frame-ancestors 'self'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Gæt navnet | Efterskolen Epos</title>
+  <link rel="stylesheet" href="/epos-website/style.css">
+  <link rel="icon" href="/epos-website/assets/img/logo.png" type="image/png">
+  <style>
+    .ns-app {
+      position: fixed;
+      inset: 0;
+      z-index: 400;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 5rem 1.25rem 2.5rem;
+      background:
+        radial-gradient(60% 50% at 50% 0%, rgba(212,175,55,.12), transparent 65%),
+        var(--color-bg);
+      text-align: center;
+    }
+    .ns-close {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      z-index: 410;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.25);
+      background: rgba(22,15,40,.55);
+      color: #fff;
+      font-size: 1.1rem;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--transition), transform var(--transition);
+      text-decoration: none;
+    }
+    .ns-close:hover, .ns-close:focus-visible { background: rgba(212,175,55,.25); transform: scale(1.06); }
+
+    .ns-screen { width: 100%; max-width: 460px; }
+    .ns-screen h1 { font-size: clamp(1.8rem, 7vw, 2.6rem); color: #F4EFFC; margin-bottom: 1rem; }
+    .ns-lede { color: var(--color-muted); margin-bottom: 1.75rem; }
+
+    .ns-passcode-row { display: flex; gap: .75rem; max-width: 320px; margin: 0 auto; }
+    .ns-passcode-row input {
+      flex: 1;
+      padding: .85rem 1rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--color-border);
+      background: rgba(255,255,255,.05);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      text-align: center;
+    }
+    .ns-error { color: #E7897A; margin-top: 1rem; min-height: 1.2em; }
+
+    .ns-score {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1.75rem;
+      font-family: var(--font-heading);
+      letter-spacing: .5px;
+      font-size: .95rem;
+    }
+    .ns-score-correct { color: #7FCB9C; }
+    .ns-score-wrong { color: #E7897A; }
+
+    .ns-photo-wrap {
+      width: min(280px, 70vw);
+      aspect-ratio: 1 / 1;
+      margin: 0 auto 1.75rem;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-lg);
+      background: var(--color-surface);
+    }
+    .ns-photo-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .ns-options { display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; max-width: 480px; margin: 0 auto; }
+    @media (max-width: 480px) { .ns-options { grid-template-columns: 1fr; } }
+
+    .ns-option {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: .95rem 1.1rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition), background var(--transition), color var(--transition);
+    }
+    .ns-option:hover:not(:disabled),
+    .ns-option:focus-visible:not(:disabled) {
+      border-color: var(--color-accent);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .ns-option:disabled { cursor: default; }
+    .ns-option.is-correct { background: rgba(127,203,156,.18); border-color: #7FCB9C; color: #F4EFFC; }
+    .ns-option.is-wrong { background: rgba(231,137,122,.18); border-color: #E7897A; color: #F4EFFC; }
+
+    .ns-feedback { min-height: 1.4em; margin-top: 1.5rem; font-family: var(--font-heading); font-size: 1.05rem; color: #F4EFFC; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ns-option { transition: none; }
+    }
+  </style>
+</head>
+<body class="ns-page">
+
+  <a class="ns-close" href="/" aria-label="Luk og gå til forsiden">✕</a>
+
+  <div class="ns-app" id="ns-app">
+
+    <section class="ns-screen" data-screen="passcode" id="ns-passcode-screen">
+      <h1>Gæt navnet</h1>
+      <p class="ns-lede">Denne side er kun til elevgruppen. Skriv koden I har fået udleveret.</p>
+      <form class="ns-passcode-row" id="ns-passcode-form">
+        <label for="ns-passcode-input" class="sr-only">Adgangskode</label>
+        <input type="text" id="ns-passcode-input" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Kode" inputmode="text">
+        <button type="submit" class="btn btn-primary">Ind</button>
+      </form>
+      <p class="ns-error" id="ns-passcode-error" role="alert"></p>
+    </section>
+
+    <section class="ns-screen" data-screen="game" id="ns-game-screen" hidden>
+      <div class="ns-score" aria-live="polite">
+        <span class="ns-score-correct">Rigtige: <span id="ns-score-correct">0</span></span>
+        <span class="ns-score-wrong">Forkerte: <span id="ns-score-wrong">0</span></span>
+      </div>
+      <div class="ns-photo-wrap">
+        <img id="ns-photo" src="" alt="Foto af en elev fra gruppen">
+      </div>
+      <div class="ns-options" id="ns-options"></div>
+      <p class="ns-feedback" id="ns-feedback" aria-live="polite"></p>
+    </section>
+
+    <noscript>
+      <div class="ns-screen">
+        <h1>Gæt navnet</h1>
+        <p class="ns-lede">Denne side kræver JavaScript.</p>
+      </div>
+    </noscript>
+
+  </div>
+
+  <script src="/navneleg/game.js"></script>
+</body>
+</html>
