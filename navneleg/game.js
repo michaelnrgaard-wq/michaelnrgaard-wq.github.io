@@ -22,6 +22,7 @@
 
   var students = [];
   var lastIndex = -1;
+  var deck = [];
   var score = { correct: 0, wrong: 0 };
   var roundLocked = false;
 
@@ -33,12 +34,22 @@
     return arr;
   }
 
+  function refillDeck() {
+    deck = students.map(function (_, i) { return i; });
+    shuffle(deck);
+    // Undgå at sidste elev fra forrige bunke bliver første i den nye.
+    if (deck.length > 1 && deck[deck.length - 1] === lastIndex) {
+      var swapWith = Math.floor(Math.random() * (deck.length - 1));
+      var tmp = deck[deck.length - 1];
+      deck[deck.length - 1] = deck[swapWith];
+      deck[swapWith] = tmp;
+    }
+  }
+
   function pickTargetIndex() {
     if (students.length < 2) return 0;
-    var idx;
-    do { idx = Math.floor(Math.random() * students.length); }
-    while (idx === lastIndex);
-    return idx;
+    if (deck.length === 0) refillDeck();
+    return deck.pop();
   }
 
   function buildOptions(targetIdx) {
